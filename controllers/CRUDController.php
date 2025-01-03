@@ -28,7 +28,7 @@
             
             $result = $conn->query("SELECT $columns FROM $this->nameTable WHERE $this->leftCompare = '$this->rightCompare'");
 
-            return $result->fetchAll();
+            return $result->fetch(PDO::FETCH_ASSOC);
         }
 
         public function select() {
