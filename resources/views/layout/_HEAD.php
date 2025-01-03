@@ -1,3 +1,15 @@
+<?php 
+    require_once __DIR__ . "/../../../controllers/CRUDController.php";
+
+    if(isset($_SESSION['user'])) {
+        $user = new CRUDContoller("users", "imageProfile", "id", $_SESSION['user']['id']);
+
+        $getAdmin = $user->conditionSelect();
+    }
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,7 +37,7 @@
                                     <i class="fa-solid fa-circle-chevron-down"></i>
                                 </span>
                             </div>
-                            <img class="w-16 h-16 object-cover rounded-full" src="/resources/img/images/<?php echo $_SESSION['user']['imageProfile'] ?>" alt="">
+                            <img class="w-16 h-16 object-cover rounded-full" src="/resources/img/images/<?php echo $getAdmin['imageProfile'] ?>" alt="">
                         </div>
         
                         <div class="popupUser hidden absolute mt-2 w-32 bg-white shadow-[0px_0px_5px_1px_#c2c2c2] p-2 rounded-md">
