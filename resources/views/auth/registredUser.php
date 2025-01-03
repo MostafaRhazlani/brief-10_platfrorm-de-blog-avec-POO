@@ -6,8 +6,9 @@
 
 
     $crud = new CRUDContoller("users", "*", "email", $email);
-    $resultUser = $crud->conditionSelect();
-
+    $user = $crud->conditionSelect();
+    $resultUser = $user[0];
+    
     $countErrors = array();
 
     // check if input email is empty
