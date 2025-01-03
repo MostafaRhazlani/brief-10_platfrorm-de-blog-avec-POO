@@ -34,7 +34,7 @@
     }
 
     if(count($countErrors) == 0) {
-        if($resultUser['idRole'] == 1) {
+        if($resultUser['role'] == 1) {
             $_SESSION['user'] = $resultUser['id'];
             header('location:/resources/views/page_admin/dashboard.php');
         } else {
