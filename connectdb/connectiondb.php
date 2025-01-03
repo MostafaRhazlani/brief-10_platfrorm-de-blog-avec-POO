@@ -17,8 +17,8 @@
         public function connect() {
             try {
                 $conn = new PDO("mysql:host=$this->servername;dbname=$this->dbName", $this->username, $this->password);
-                return $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            } catch (PDOException $error) {
+                return $conn;
+                } catch (PDOException $error) {
                 echo "Connection failed: " . $error->getMessage();
             }
         }
