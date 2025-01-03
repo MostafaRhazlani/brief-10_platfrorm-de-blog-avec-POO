@@ -1,0 +1,1 @@
+<?php header('location: /resources/views/blog/blog.php') ?>
