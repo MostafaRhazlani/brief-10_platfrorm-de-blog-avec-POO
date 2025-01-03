@@ -4,12 +4,46 @@
     class CRUDContoller {
         private $nameTable;
         private $columns;
+        private $leftCompare;
+        private $rightCompare;
         private $values;
 
-        public function __construct($nameTable = "", $columns = [], $values = []) {
+        public function __construct($nameTable = "", $columns = [], $leftCompare = "", $rightCompare = "", $values = []) {
             $this->nameTable = $nameTable;
             $this->columns = $columns;
+            $this->leftCompare = $leftCompare;
+            $this->rightCompare = $rightCompare;
             $this->values = $values;
+        }
+
+        public function conditionSelect() {
+            $db = new DB();
+            $conn = $db->connect();
+
+            if(is_array($this->columns)) {
+                $columns = implode(", ", $this->columns);
+            } else {
+                $columns = $this->columns;
+            }
+            
+            $result = $conn->query("SELECT $columns FROM $this->nameTable WHERE $this->leftCompare = '$this->rightCompare'");
+
+            return $result->fetch();
+        }
+
+        public function select() {
+            $db = new DB();
+            $conn = $db->connect();
+
+            if(is_array($this->columns)) {
+                $columns = implode(", ", $this->columns);
+            } else {
+                $columns = $this->columns;
+            }
+            
+            $result = $conn->query("SELECT $columns FROM $this->nameTable");
+
+            return $result->fetchObject();
         }
 
         // method create
