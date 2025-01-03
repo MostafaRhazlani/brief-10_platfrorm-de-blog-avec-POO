@@ -20,10 +20,10 @@
 
         public function createUser() {
         
-            $crud = new CRUDContoller("users", ["username", "email", "password", "role", "imageProfile"], [$this->username, $this->email, $this->password, $this->role, $this->imageProfile]);
+            $crud = new CRUDContoller("users", ["username", "email", "password", "role", "imageProfile"], "", "", [$this->username, $this->email, $this->password, $this->role, $this->imageProfile]);
             return $crud->create();
 
         }
     }
 
-?>;
+?>
