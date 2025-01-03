@@ -5,10 +5,8 @@
     $password = isset($_POST['password']) ? $_POST['password'] : '';
 
 
-    $crud = new CRUDContoller("users", "*", "email", $email);
-    $user = $crud->conditionSelect();
-    $resultUser = $user[0];
-    
+    $checkPassword = new CRUDContoller("users", "password", "email", $email);
+    $resultUser = $checkPassword->conditionSelect();
     $countErrors = array();
 
     // check if input email is empty
@@ -35,11 +33,15 @@
     }
 
     if(count($countErrors) == 0) {
-        if($resultUser['role'] == 1) {
-            $_SESSION['user'] = $resultUser['id'];
+
+        $requiredColumns = new CRUDContoller("users", ["id", "role"], "email", $email);
+        $columns = $requiredColumns->conditionSelect();
+        
+        if($columns['role'] == 1) {
+            $_SESSION['user'] = $columns;
             header('location:/resources/views/page_admin/dashboard.php');
         } else {
-            $_SESSION['user'] = $resultUser['id'];
+            $_SESSION['user'] = $columns;
             header('location:/resources/views/blog/blog.php');
         }
     } else {
