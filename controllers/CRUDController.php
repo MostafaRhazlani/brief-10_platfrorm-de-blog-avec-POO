@@ -28,7 +28,7 @@
             
             $result = $conn->query("SELECT $columns FROM $this->nameTable WHERE $this->leftCompare = '$this->rightCompare'");
 
-            return $result->fetch();
+            return $result->fetchAll();
         }
 
         public function select() {
@@ -62,6 +62,15 @@
             $result = $conn->prepare("INSERT INTO $this->nameTable($columns) VALUES($placeholders)");
 
             return $result->execute($params);
+        }
+
+        public function count() {
+            $db = new DB();
+            $conn = $db->connect();
+
+            $result = $conn->query("SELECT count(*) FROM $this->nameTable");
+
+            return $result->fetchColumn();
         }
 
     }

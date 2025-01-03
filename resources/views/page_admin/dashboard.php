@@ -1,19 +1,18 @@
 <?php
     require_once('../../../isLogged/isOwner.php');
-    require_once('../../../connectdb/connectiondb.php');
-
-    $likes = mysqli_query($conn, "SELECT COUNT(*) AS totalLikes FROM likes");
-    $totalLikes = mysqli_fetch_assoc($likes);
-
-    $comments = mysqli_query($conn, "SELECT COUNT(*) AS totalComments FROM comments");
-    $totalComments = mysqli_fetch_assoc($comments);
-
-    $users = mysqli_query($conn, "SELECT COUNT(*) AS totalUsers FROM users");
-    $totalUsers = mysqli_fetch_assoc($users);
-
-    $articles = mysqli_query($conn, "SELECT COUNT(*) AS totalArticles FROM articles");
-    $totalArticles = mysqli_fetch_assoc($articles);
+    require_once __DIR__ . '/../../../controllers/CRUDController.php';
     
+    $countLikes = new CRUDContoller("likearticle");
+    $totalLikes = $countLikes->count();
+
+    $countComments = new CRUDContoller("comments");
+    $totalComments = $countComments->count();
+
+    $countUsers = new CRUDContoller("users");
+    $totalUsers = $countUsers->count();
+
+    $countArticles = new CRUDContoller("articles");
+    $totalArticles = $countArticles->count();
 ?>
 
 <?php include('../layout/_HEAD.php') ?>
@@ -27,7 +26,7 @@
             </span>
             <p class="text-xl"> Likes</p>
         </div>
-            <p class="text-5xl font-bold"><?php echo $totalLikes['totalLikes'] ?></p>
+            <p class="text-5xl font-bold"><?php echo $totalLikes ?></p>
         <div class="mt-4 w-full h-4 rounded-full py-2 px-1 border-2 flex items-center">
             <div class="totalLikes bg-red-600 h-3 rounded-full"></div>
         </div>
@@ -39,7 +38,7 @@
             </span>
             <p class="text-xl"> Comments</p>
         </div>
-            <p class="text-5xl font-bold"><?php echo $totalComments['totalComments'] ?></p>
+            <p class="text-5xl font-bold"><?php echo $totalComments ?></p>
         <div class="mt-4 w-full h-4 rounded-full py-2 px-1 border-2 flex items-center">
             <div class="totalComments bg-blue-600 h-3 rounded-full"></div>
         </div>
@@ -51,7 +50,7 @@
             </span>
             <p class="text-xl"> Users</p>
         </div>
-            <p class="text-5xl font-bold"><?php echo $totalUsers['totalUsers'] ?></p>
+            <p class="text-5xl font-bold"><?php echo $totalUsers ?></p>
         <div class="mt-4 w-full h-4 rounded-full py-2 px-1 border-2 flex items-center">
             <div class="totalUsers bg-teal-600 h-3 rounded-full"></div>
         </div>
@@ -63,7 +62,7 @@
             </span>
             <p class="text-xl"> Articles</p>
         </div>
-            <p class="text-5xl font-bold"><?php echo $totalArticles['totalArticles'] ?></p>
+            <p class="text-5xl font-bold"><?php echo $totalArticles ?></p>
         <div class="mt-4 w-full h-4 rounded-full py-2 px-1 border-2 flex items-center">
             <div class="totalArticles bg-purple-600 h-3 rounded-full"></div>
         </div>
@@ -79,10 +78,10 @@
     const totalArticles = document.querySelector('.totalArticles');
 
     const targetElements = {
-        totalLikes: <?php echo $totalLikes['totalLikes'] ?>,
-        totalComments: <?php echo $totalComments['totalComments'] ?>,
-        totalUsers: <?php echo $totalUsers['totalUsers'] ?>,
-        totalArticles: <?php echo $totalArticles['totalArticles'] ?>,
+        totalLikes: <?php echo $totalLikes ?>,
+        totalComments: <?php echo $totalComments ?>,
+        totalUsers: <?php echo $totalUsers ?>,
+        totalArticles: <?php echo $totalArticles ?>,
     }
 
     document.addEventListener('DOMContentLoaded', () => {
