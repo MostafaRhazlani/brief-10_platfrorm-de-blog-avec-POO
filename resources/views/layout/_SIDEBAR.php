@@ -20,7 +20,7 @@
             <div class="bg-[#aba6a6]"></div>
         </li>
 
-        <?php if(isset($_SESSION['user']) && $_SESSION['user']['id'] == $getAdmin['id']) { ?>
+        <?php if(isset($_SESSION['user']) && $_SESSION['user']['role'] == 1) { ?>
             <li>
                 <a href="/resources/views/page_admin/articles/articles.php" class="text-gray-500">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 hover:fill-[#200E32] <?php if($page == '/resources/views/page_admin/articles/articles.php') echo 'fill-[#200E32]' ?>" height="24px" viewBox="0 -960 960 960" width="24px" fill="#aba6a6"><path d="M280-280h280v-80H280v80Zm0-160h400v-80H280v80Zm0-160h400v-80H280v80Zm-80 480q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z"/></svg>
