@@ -17,6 +17,12 @@
             return $result;
         }
 
+        public function getCategory() {
+            $getOne = new CRUDContoller("categories", "*", "id", $this->id);
+
+            return $getOne->conditionSelect();
+        }
+
         public function store() {
             $create = new CRUDContoller("categories", ["nameCategory"], "", "", [$this->nameCategory]);
 
@@ -31,6 +37,12 @@
             $result = $update->update();
 
             return $result;
+        }
+
+        public function destroy() {
+            $delete = new CRUDContoller("categories", "", "id", $this->id);
+
+            return $delete->destroy();
         }
     }
 

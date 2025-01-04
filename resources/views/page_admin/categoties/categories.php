@@ -1,6 +1,6 @@
 <?php 
     require_once('../../../../isLogged/isOwner.php');
-    require __DIR__ . '/../../../../controllers/CategoryController.php';
+    require_once __DIR__ . '/../../../../controllers/CategoryController.php';
 
     $categories = new CategoryController();
 

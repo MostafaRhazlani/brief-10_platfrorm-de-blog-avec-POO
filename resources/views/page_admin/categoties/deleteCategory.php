@@ -1,6 +1,6 @@
 <?php
     require_once('../../../../isLogged/isOwner.php');
-    require_once('../../../../connectdb/connectiondb.php');
+    require_once __DIR__ . '/../../../../controllers/CategoryController.php';
     //  check if the id exist in url and get it
     if(isset($_GET['idDeleteCategory'])) {
         $getIdCategory = $_GET['idDeleteCategory'];
@@ -11,19 +11,18 @@
             });
         </script>";
 
-        $getCategory = mysqli_query($conn, "SELECT id FROM categories WHERE id = $getIdCategory");
-        $resultCategory = mysqli_fetch_assoc($getCategory);
+        $getCategory = new CategoryController($getIdCategory);
+
+        $resultCategory = $getCategory->getCategory();
         
     }
 
-    if(isset($_POST['idCategory'])) {
+    if($_SERVER['REQUEST_METHOD'] === 'POST') {
         $idCategory = $_POST['idCategory'];
 
-        $deleteCategory = mysqli_prepare($conn, "DELETE FROM categories WHERE id = ?");
-        
-        mysqli_stmt_bind_param($deleteCategory, 'i', $idCategory);
-        if(mysqli_stmt_execute($deleteCategory)) {
+        $deleteCategory = new CategoryController($idCategory);
 
+        if($deleteCategory->destroy()) {
             header('location: categories.php');
         }
     }
