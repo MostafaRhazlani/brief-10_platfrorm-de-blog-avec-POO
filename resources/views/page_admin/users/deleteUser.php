@@ -1,6 +1,6 @@
 <?php
     require_once('../../../../isLogged/isOwner.php');
-    require_once('../../../../connectdb/connectiondb.php');
+    require_once __DIR__ . '/../../../../controllers/UserController.php';
 
     //  check if the id exist in url and get it
     if(isset($_GET['idDeleteUser'])) {
@@ -12,19 +12,16 @@
             });
         </script>";
 
-        $getUser = mysqli_query($conn, "SELECT id FROM users WHERE id = $getIdUser");
-        $resultUser = mysqli_fetch_assoc($getUser);
+        $user = new UserController($getIdUser);
+        $resultUser = $user->getUser();
         
     }
 
     if(isset($_POST['idUser'])) {
         $idUser = $_POST['idUser'];
-
-        $deleteUser = mysqli_prepare($conn, "DELETE FROM users WHERE id = ?");
         
-        mysqli_stmt_bind_param($deleteUser, 'i', $idUser);
-        if(mysqli_stmt_execute($deleteUser)) {
-
+        $deleteUser = new UserController($idUser);
+        if($deleteUser->destroy()) {
             header('location: users.php');
         }
     }
@@ -43,7 +40,7 @@
         
         <form action="./deleteUser.php" method="post">
             
-            <input type="hidden" name="idUser" value="<?php echo $resultUser['id'] ?>">
+            <input type="text" name="idUser" value="<?php echo $resultUser['id'] ?>">
            
             <div class="mt-10 flex justify-evenly">
                 <button id="closeDelete" type="button" class="px-3 py-2 w-2/6 bg-red-600 text-white rounded-md hover:bg-red-400">No</button>

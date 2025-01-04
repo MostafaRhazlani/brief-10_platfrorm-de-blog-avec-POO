@@ -16,6 +16,7 @@
             $this->values = $values;
         }
 
+        // method select with condition
         public function conditionSelect() {
             $db = new DB();
             $conn = $db->connect();
@@ -28,9 +29,10 @@
             
             $result = $conn->query("SELECT $columns FROM $this->nameTable WHERE $this->leftCompare = '$this->rightCompare'");
 
-            return $result->fetch(PDO::FETCH_ASSOC);
+            return $result->fetch();
         }
 
+        // method select
         public function select() {
             $db = new DB();
             $conn = $db->connect();
@@ -43,7 +45,7 @@
             
             $result = $conn->query("SELECT $columns FROM $this->nameTable");
 
-            return $result->fetchObject();
+            return $result->fetchAll(PDO::FETCH_ASSOC);
         }
 
         // method create
@@ -64,6 +66,18 @@
             return $result->execute($params);
         }
 
+        // method delete
+        public function destroy() {
+            $db = new DB();
+            $conn = $db->connect();
+
+            $params = [$this->rightCompare];
+            $result = $conn->prepare("DELETE FROM $this->nameTable WHERE $this->leftCompare = ?");
+
+            return $result->execute($params);
+        }
+
+        // methode to count rows
         public function count() {
             $db = new DB();
             $conn = $db->connect();
