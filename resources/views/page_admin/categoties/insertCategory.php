@@ -1,14 +1,14 @@
 <?php
-    require_once('../../../../connectdb/connectiondb.php');
+    require __DIR__ . '/../../../../controllers/CategoryController.php';
 
-    $nameCategory = isset($_POST['category']) ? $_POST['category'] : '';
+    if($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $nameCategory = $_POST['nameCategory'];
 
-    $insertCategory = mysqli_prepare($conn, "INSERT INTO categories(nameCategory) VALUES(?)");
+        $storeCategory = new CategoryController("", $nameCategory);
 
-    mysqli_stmt_bind_param($insertCategory, 's', $nameCategory);
-
-    if(mysqli_stmt_execute($insertCategory)) {
-        header('location: categories.php');
+        if($storeCategory->store()) {
+            header('location: categories.php');
+        }
     }
 
 ?>
