@@ -1,8 +1,12 @@
 <?php 
     require_once('../../../../isLogged/isOwner.php');
-    require_once('../../../../connectdb/connectiondb.php');
+    require __DIR__ . '/../../../../controllers/CategoryController.php';
 
-    $getCategories = mysqli_query($conn, "SELECT * FROM categories");
+    $categories = new CategoryController();
+
+    $getCategories = $categories->index();
+
+
 ?>
 
 <?php include('../../layout/_HEAD.php') ?>
@@ -12,7 +16,7 @@
     <div class="mb-3 flex flex-col md:flex-row justify-between">
         <form action="./insertCategory.php" method="post">
             <div class="flex flex-col md:flex-row-reverse mb-5 md:mb-0">
-                <input class="border-2 border-red-600 rounded-md py-2 px-4" type="text" placeholder="Enter category" name="category">
+                <input class="border-2 border-red-600 rounded-md py-2 px-4" type="text" placeholder="Enter category" name="nameCategory">
                 <button class="py-2 px-4 bg-red-600 rounded-md hover:bg-red-500 text-white md:mr-3 mt-2 md:mt-0"><i class="fa-solid fa-circle-plus"></i> Add Category</button>
             </div>
         </form>
@@ -32,9 +36,9 @@
                         </thead>
                         <tbody>
                             <!-- display all articles -->
-                             <?php if($getCategories) { ?>
+                             <?php if(isset($getCategories)) { ?>
                                 <?php $index = 0; 
-                                    while($category = mysqli_fetch_assoc($getCategories)) { ?>
+                                    foreach($getCategories as $category) { ?>
                                     <tr class="border-b-[0.2px] text-start hover:bg-gray-100">
                                         <td class="px-4 py-4"><?php echo $index +=1 ?></td>
                                         <td class="text-center px-4 py-4"><?php echo $category['nameCategory'] ?></td>
