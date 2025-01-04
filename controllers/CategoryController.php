@@ -24,6 +24,14 @@
 
             return $result;
         }
+
+        public function update() {
+            $update = new CRUDContoller("categories", "nameCategory", "id", $this->id, [$this->nameCategory]);
+
+            $result = $update->update();
+
+            return $result;
+        }
     }
 
 ?>
