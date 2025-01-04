@@ -1,20 +1,27 @@
 <?php
-require_once('../../../../connectdb/connectiondb.php');
-    if(isset($_POST['idUser'])) {
-        $idUser = $_POST['idUser'];
-        $idRole = $_POST['idRole'];
 
-        var_dump($idUser, $idRole);
-        $updateRole = mysqli_prepare($conn, "UPDATE users SET idRole = ? WHERE id = ?");
+    require_once __DIR__ . '/../../../../connectdb/connectiondb.php';
+    require_once __DIR__ . '/../../../../controllers/UserController.php';
+    
+    $db = new DB();
+    $conn = $db->connect();
 
-        mysqli_stmt_bind_param($updateRole, 'ii', $idRole, $idUser);
-
-        if(mysqli_stmt_execute($updateRole)) {
-            if($idRole == 1) {
-                header('location: users.php');
-            } else {
-                require_once('../../auth/logout.php');
-            }
+    if(isset($_GET['idUser'])) {
+        $idUser = $_GET['idUser'];
+        
+        $user = new UserController($idUser);
+        $getUser = $user->getUser();
+        
+        if($getUser['role'] == 1) {
+            $updateUser = new UserController($idUser, "", "", "", 0);
+            // $updateRole = $updateUser->update();
+        } else {
+            $updateUser = new UserController($idUser, "", "", "", 1);
+        }
+        
+        $updateRole = $updateUser->updateRole();
+        if($updateRole) {
+            header('location: users.php');
         }
     }
 ?>

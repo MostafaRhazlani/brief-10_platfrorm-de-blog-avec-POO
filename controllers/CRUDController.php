@@ -66,6 +66,29 @@
             return $result->execute($params);
         }
 
+        // methode update
+        public function update() {
+            $db = new DB();
+            $conn = $db->connect();
+
+            
+            if(is_array($this->columns)) {
+                $columns = [];
+                for ($i = 0; $i < count($this->columns); $i++) { 
+                    $columns[] = "$this->columns = ?";
+                }
+                $columns = implode(", ", $columns);
+            } else {
+                $columns = "$this->columns = ?";
+            }
+
+
+            $params = $this->values;
+            $result = $conn->prepare("UPDATE $this->nameTable SET $columns WHERE $this->leftCompare = '$this->rightCompare'");
+
+            return $result->execute($params);
+        }
+
         // method delete
         public function destroy() {
             $db = new DB();

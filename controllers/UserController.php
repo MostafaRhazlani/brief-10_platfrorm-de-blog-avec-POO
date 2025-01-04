@@ -34,9 +34,21 @@
         }
 
         public function getUser() {
-            $crud = new CRUDContoller("users", "id", "id", $this->id);
+            $crud = new CRUDContoller("users", "*", "id", $this->id);
 
             return $crud->conditionSelect();
+        }
+
+        public function updateRole() {
+            
+            if($this->role == 0) {
+                $userRole = new CRUDContoller("users", "role", "id", $this->id, [0]);
+                return $userRole->update();
+            } else {
+                $adminRole = new CRUDContoller("users", "role", "id", $this->id, [1]);
+                return $adminRole->update();
+            }
+
         }
 
         public function destroy() {

@@ -38,7 +38,7 @@
                                 <td class="px-4 py-4"><?php echo $user['email'] ?></td>
                                 <td class="px-4 py-4 text-center relative">
                                     <!-- change role -->
-                                    <a href="./users.php?idUser=<?php echo $user['id'] ?>" class="<?php echo ($user['role'] == 1) ? 'bg-green-600' : 'bg-blue-600' ?> px-2 py-[2px] rounded-full text-white">
+                                    <a href="./updateRole.php?idUser=<?php echo $user['id'] ?>" class="<?php echo ($user['role'] == 1) ? 'bg-green-600' : 'bg-blue-600' ?> px-2 py-[2px] rounded-full text-white">
                                     <?php echo ($user['role'] == 1) ? 'Admin' : 'User' ?>
                                     </a>
                                 </td>
