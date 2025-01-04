@@ -40,7 +40,7 @@
         
         <form action="./deleteUser.php" method="post">
             
-            <input type="text" name="idUser" value="<?php echo $resultUser['id'] ?>">
+            <input type="hidden" name="idUser" value="<?php echo $resultUser['id'] ?>">
            
             <div class="mt-10 flex justify-evenly">
                 <button id="closeDelete" type="button" class="px-3 py-2 w-2/6 bg-red-600 text-white rounded-md hover:bg-red-400">No</button>
