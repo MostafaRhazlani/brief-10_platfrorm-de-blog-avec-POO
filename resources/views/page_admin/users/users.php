@@ -32,22 +32,24 @@
                     <?php if($resultUsers) { ?>
                         <?php $index = 0; 
                             foreach($resultUsers as $user) { ?>
-                            <tr class="border-b-[0.2px] text-start hover:bg-gray-100">
-                                <td class="px-4 py-4"><?php echo $index +=1 ?></td>
-                                <td class="px-4 py-4"><?php echo $user['username'] ?></td>
-                                <td class="px-4 py-4"><?php echo $user['email'] ?></td>
-                                <td class="px-4 py-4 text-center relative">
+                            <?php if($_SESSION['user']['id'] !== $user['id']) { ?>
+                                <tr class="border-b-[0.2px] text-start hover:bg-gray-100">
+                                    <td class="px-4 py-4"><?php echo $index +=1 ?></td>
+                                    <td class="px-4 py-4"><?php echo $user['username'] ?></td>
+                                    <td class="px-4 py-4"><?php echo $user['email'] ?></td>
+                                    <td class="px-4 py-4 text-center relative">
                                     <!-- change role -->
-                                    <a href="./updateRole.php?idUser=<?php echo $user['id'] ?>" class="<?php echo ($user['role'] == 1) ? 'bg-green-600' : 'bg-blue-600' ?> px-2 py-[2px] rounded-full text-white">
-                                    <?php echo ($user['role'] == 1) ? 'Admin' : 'User' ?>
-                                    </a>
-                                </td>
-                                <td class="px-4 py-4 min-w-32 text-center">
-                                    <a href="./users.php?idDeleteUser=<?php echo $user['id'] ?>" class="showFormDelete bg-red-700 rounded-full px-2 py-1 text-white text-[13px] mr-2 hover:bg-red-500 cursor-pointer">
-                                        <i class="fa-regular fa-trash-can"></i>&nbsp;Delete
-                                    </a>
-                                </td>
-                            </tr>
+                                        <a href="./updateRole.php?idUser=<?php echo $user['id'] ?>" class="<?php echo ($user['role'] == 1) ? 'bg-green-600' : 'bg-blue-600' ?> px-2 py-[2px] rounded-full text-white">
+                                        <?php echo ($user['role'] == 1) ? 'Admin' : 'User' ?>
+                                        </a>
+                                    </td>
+                                    <td class="px-4 py-4 min-w-32 text-center">
+                                        <a href="./users.php?idDeleteUser=<?php echo $user['id'] ?>" class="showFormDelete bg-red-700 rounded-full px-2 py-1 text-white text-[13px] mr-2 hover:bg-red-500 cursor-pointer">
+                                            <i class="fa-regular fa-trash-can"></i>&nbsp;Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                            <?php } ?>
                         <?php } ?>
                     <?php } ?>
                 </tbody>
