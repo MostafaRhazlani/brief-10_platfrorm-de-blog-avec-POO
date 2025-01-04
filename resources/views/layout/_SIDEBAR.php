@@ -1,5 +1,12 @@
 <?php
+    require_once __DIR__ . "/../../../controllers/CRUDController.php";
     $page = $_SERVER['PHP_SELF'];
+
+    $user = new CRUDContoller("users", "id", "role", 1);
+
+    $getAdmin = $user->conditionSelect();
+    
+
 ?>
 
 <div class="w-full py-3 px-6 md:px-4 fixed bottom-0 md:top-0 z-10 md:w-[70px] bg-white shadow-[0px_0px_2px_#9b9b9b]">
@@ -13,7 +20,7 @@
             <div class="bg-[#aba6a6]"></div>
         </li>
 
-        <?php if(isset($_SESSION['user']) && $_SESSION['user']['idRole'] == 1) { ?>
+        <?php if(isset($_SESSION['user']) && $_SESSION['user']['id'] == $getAdmin['id']) { ?>
             <li>
                 <a href="/resources/views/page_admin/articles/articles.php" class="text-gray-500">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 hover:fill-[#200E32] <?php if($page == '/resources/views/page_admin/articles/articles.php') echo 'fill-[#200E32]' ?>" height="24px" viewBox="0 -960 960 960" width="24px" fill="#aba6a6"><path d="M280-280h280v-80H280v80Zm0-160h400v-80H280v80Zm0-160h400v-80H280v80Zm-80 480q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z"/></svg>

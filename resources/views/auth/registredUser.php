@@ -1,13 +1,12 @@
 <?php
     session_start();
-    require_once('../../../connectdb/connectiondb.php');
-
+    require __DIR__ . "/../../../controllers/UserController.php";    
     $email = isset($_POST['email']) ? $_POST['email'] : '';
     $password = isset($_POST['password']) ? $_POST['password'] : '';
 
-    $getUser = mysqli_query($conn, "SELECT * FROM users WHERE email = '$email'");
-    $resultUser = mysqli_fetch_assoc($getUser);
 
+    $checkPassword = new CRUDContoller("users", "password", "email", $email);
+    $resultUser = $checkPassword->conditionSelect();
     $countErrors = array();
 
     // check if input email is empty
@@ -34,11 +33,15 @@
     }
 
     if(count($countErrors) == 0) {
-        if($resultUser['idRole'] == 1) {
-            $_SESSION['user'] = $resultUser;
+
+        $requiredColumns = new CRUDContoller("users", ["id", "role"], "email", $email);
+        $columns = $requiredColumns->conditionSelect();
+        
+        if($columns['role'] == 1) {
+            $_SESSION['user'] = $columns;
             header('location:/resources/views/page_admin/dashboard.php');
         } else {
-            $_SESSION['user'] = $resultUser;
+            $_SESSION['user'] = $columns;
             header('location:/resources/views/blog/blog.php');
         }
     } else {
