@@ -60,7 +60,7 @@
     
         if(count($countErrors) == 0) {
             $password_hashed = password_hash($password, PASSWORD_BCRYPT);
-            $user = new UserController($username, $email, $password_hashed, $role, $imageProfile);
+            $user = new UserController("", $username, $email, $password_hashed, $role, $imageProfile);
     
             if($user->createUser()) {
                 header('location: login.php');
