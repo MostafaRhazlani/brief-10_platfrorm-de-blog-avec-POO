@@ -1,15 +1,18 @@
 <?php 
     require_once('../../../../isLogged/isOwner.php');
-    require_once('../../../../connectdb/connectiondb.php');
+    require_once __DIR__ . '/../../../../controllers/ArticleController.php';
 
-    $getArticles = mysqli_query($conn, "SELECT articles.*, users.username FROM articles INNER JOIN users ON users.id = articles.idUser");
+    $articles = new ArticleController();
+    
+    $getArticles = $articles->index();
 ?>
 
 <?php include('../../layout/_HEAD.php') ?>
 <?php include('../../layout/_SIDEBAR.php') ?>
 
 <div class="md:pl-20 w-full h-screen pt-32 p-3">
-    <div class="mb-3 flex justify-between">
+    <div class="mb-3 flex flex-col md:flex-row justify-between">
+        <button class="showFormArticle py-2 px-4 bg-red-600 rounded-md hover:bg-red-500 text-white md:mr-3 mt-2 md:mt-0"><i class="fa-solid fa-circle-plus"></i> Add Article</button>
         <button class="py-2 px-4 bg-red-600 rounded-md hover:bg-red-500 text-white"><i class="fa-solid fa-arrow-down-a-z"></i> Sort Articles</button>
     </div>
     <div class="w-full h-5/6 shadow-[0px_0px_4px_#c9c9c9] rounded-md">
@@ -31,7 +34,7 @@
                             <!-- display all articles -->
                              <?php if($getArticles) { ?>
                                 <?php $index = 0; 
-                                    while($article = mysqli_fetch_assoc($getArticles)) { ?>
+                                    foreach($getArticles as $article) { ?>
                                     <tr class="border-b-[0.2px] text-start hover:bg-gray-100">
                                         <td class="px-4 py-4"><?php echo $index +=1 ?></td>
                                         <td class="px-4 py-4"><?php echo $article['title'] ?></td>
@@ -54,6 +57,17 @@
     </div>
 </div>
 
+<?php include('./addArticle.php') ?>
 <?php include('./deleteArticle.php') ?>
 
 <?php include('../../layout/_FOOTER.php') ?>
+
+<script>
+    const closeForm = document.querySelectorAll('.close');
+    closeForm.forEach(close => {
+    close.addEventListener('click', () => {
+        window.location.href = "articles.php";
+        
+    })
+})
+</script>
