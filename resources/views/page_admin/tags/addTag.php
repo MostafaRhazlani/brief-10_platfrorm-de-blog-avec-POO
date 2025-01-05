@@ -11,7 +11,7 @@
 <div class="formTag w-full h-full fixed top-0 z-30 bg-slate-200 bg-opacity-75 flex justify-center items-center hidden">
     <div class="bg-white p-4 rounded-lg w-5/6 md:w-3/5 lg:w-2/6 relative">
         
-        <span class="closeFromTag absolute right-4 top-3 text-3xl text-gray-500 cursor-pointer hover:text-red-600">
+        <span class="closeFormTag absolute right-4 top-3 text-3xl text-gray-500 cursor-pointer hover:text-red-600">
             <i class="fa-regular fa-circle-xmark"></i>
         </span>
         <h1 class="text-center font-semibold text-xl mb-3">add new tag</h1>
