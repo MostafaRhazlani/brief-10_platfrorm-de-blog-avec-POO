@@ -32,6 +32,11 @@
                 </a>
             </li>
             <li>
+                <a href="/resources/views/page_admin/tags/tags.php" class="text-gray-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 hover:fill-[#200E32] <?php if($page == '/resources/views/page_admin/tags/tags.php') echo 'fill-[#200E32]' ?>" height="24px" viewBox="0 -960 960 960" width="24px" fill="#aba6a6"><path d="m159-168-34-14q-31-13-41.5-45t3.5-63l72-156v278Zm160 88q-33 0-56.5-23.5T239-160v-240l106 294q3 7 6 13.5t8 12.5h-40Zm206-4q-32 12-62-3t-42-47L243-622q-12-32 2-62.5t46-41.5l302-110q32-12 62 3t42 47l178 488q12 32-2 62.5T827-194L525-84Zm-86-476q17 0 28.5-11.5T479-600q0-17-11.5-28.5T439-640q-17 0-28.5 11.5T399-600q0 17 11.5 28.5T439-560Zm58 400 302-110-178-490-302 110 178 490ZM319-650l302-110-302 110Z"/></svg>    
+                </a>
+            </li>
+            <li>
                 <a href="/resources/views/page_admin/users/users.php" class="text-gray-500">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 hover:fill-[#200E32] <?php if($page == '/resources/views/page_admin/users/users.php') echo 'fill-[#200E32]' ?>" height="24px" viewBox="0 -960 960 960" width="24px" fill="#aba6a6"><path d="M40-160v-112q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v112H40Zm720 0v-120q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v120H760ZM360-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm400-160q0 66-47 113t-113 47q-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113ZM120-240h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T440-640q0-33-23.5-56.5T360-720q-33 0-56.5 23.5T280-640q0 33 23.5 56.5T360-560Zm0 320Zm0-400Z"/></svg>
                 </a>
