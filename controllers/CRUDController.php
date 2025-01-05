@@ -73,13 +73,13 @@
 
             
             if(is_array($this->columns)) {
-                $columns = [];
+                $arrayColumns = [];
                 for ($i = 0; $i < count($this->columns); $i++) { 
-                    $columns[] = "$this->columns = ?";
+                    $arrayColumns[] = $this->columns[$i] . " = ?";
                 }
-                $columns = implode(", ", $columns);
+                $columns = implode(", ", $arrayColumns);
             } else {
-                $columns = "$this->columns = ?";
+                $columns = $this->columns . " = ?";
             }
 
 
