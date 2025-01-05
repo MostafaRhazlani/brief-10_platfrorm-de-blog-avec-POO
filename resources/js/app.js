@@ -1,6 +1,9 @@
 const showFormArticle = document.querySelectorAll('.showFormArticle');
 const formArticle = document.querySelector('.formArticle');
 
+const showFormTag = document.querySelector('.showFormTag');
+const formTag = document.querySelector('.formTag');
+
 const showInputImage = document.querySelectorAll('.showInputImage');
 const inputImage = document.querySelectorAll('.inputImage');
 
@@ -24,6 +27,11 @@ showFormArticle.forEach(show => {
     show.addEventListener('click', () => {
         formArticle.classList.remove('hidden');
     })
+})
+
+// show form ot add tag
+showFormTag.addEventListener('click', () => {
+    formTag.classList.remove('hidden');
 })
 
 // show input upload image in form article

@@ -11,13 +11,8 @@
 
 <div class="md:pl-20 w-full h-screen pt-28 p-3">
     <div class="mb-3 flex flex-col md:flex-row justify-between">
-        <form action="./insertCategory.php" method="post">
-            <div class="flex flex-col md:flex-row-reverse mb-5 md:mb-0">
-                <input class="border-2 border-red-600 rounded-md py-2 px-4" type="text" placeholder="Enter category" name="nameCategory">
-                <button class="py-2 px-4 bg-red-600 rounded-md hover:bg-red-500 text-white md:mr-3 mt-2 md:mt-0"><i class="fa-solid fa-circle-plus"></i> Add Category</button>
-            </div>
-        </form>
-        <button class="py-2 px-4 bg-red-600 rounded-md hover:bg-red-500 text-white"><i class="fa-solid fa-arrow-down-a-z"></i> Sort Categories</button>
+        <button class="showFormTag py-2 px-4 bg-red-600 rounded-md hover:bg-red-500 text-white md:mr-3 mt-2 md:mt-0"><i class="fa-solid fa-circle-plus"></i> Add Tag</button>
+        <button class="py-2 px-4 bg-red-600 rounded-md hover:bg-red-500 text-white"><i class="fa-solid fa-arrow-down-a-z"></i> Sort Tags</button>
     </div>
     <div class="w-full h-5/6 shadow-[0px_0px_4px_#c9c9c9] rounded-md">
         <div class="p-4">
@@ -27,6 +22,7 @@
                         <thead>
                             <tr>
                                 <th class="p-4 text-start">ID</th>
+                                <th class="p-4 text-center">Name Tag</th>
                                 <th class="p-4 text-center">Name Category</th>
                                 <th class="p-4 text-center">Actions</th>
                             </tr>
@@ -39,6 +35,7 @@
                                     <tr class="border-b-[0.2px] text-start hover:bg-gray-100">
                                         <td class="px-4 py-4"><?php echo $index +=1 ?></td>
                                         <td class="text-center px-4 py-4"><?php echo $tag['nameTag'] ?></td>
+                                        <td class="text-center px-4 py-4"><?php echo $tag['idCategory'] ?></td>
                                         <td class="px-4 py-4 min-w-96 flex items-center justify-center">
                                             <a href="./categories.php?idDeleteTag=<?php echo $tag['id'] ?>" class="bg-red-700 rounded-full px-2 py-1 text-white text-[13px] mr-2 hover:bg-red-500 cursor-pointer">
                                                 <i class="fa-regular fa-trash-can"></i>&nbsp;Delete
@@ -63,7 +60,16 @@
         </div>
     </div>
 </div>
+<?php include('./addTag.php') ?>
 
 <?php include('./deleteCategory.php') ?>
 
 <?php include('../../layout/_FOOTER.php') ?>
+
+<script>
+    document.querySelectorAll('.closeFromTag').forEach(close => {
+        close.addEventListener('click', () => {
+            document.querySelector('.formTag').classList.add('hidden');
+        })
+    })
+</script>
