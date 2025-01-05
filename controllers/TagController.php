@@ -44,6 +44,12 @@
 
             return $result;
         }
+
+        public function destroy() {
+            $delete = new CRUDContoller("tags", "", "id", $this->id);
+
+            return $delete->destroy();
+        }
     }
 
 ?>

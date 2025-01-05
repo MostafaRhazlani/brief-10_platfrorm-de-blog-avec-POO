@@ -56,6 +56,7 @@
 </div>
 <?php include('./addTag.php') ?>
 <?php include('./editTag.php') ?>
+<?php include('./deleteTag.php') ?>
 
 <script>
     const closeFormTag = document.querySelectorAll('.closeFormTag');
