@@ -1,10 +1,9 @@
-<?php 
-    session_start();
-    require __DIR__ . '/../../../../controllers/CategoryController.php';
+<?php
+    require __DIR__ . '/../../../../controllers/TagController.php';
     require __DIR__ . '/../../../../controllers/UserController.php';
 
-    $categories = new CategoryController();
-    $getCategories = $categories->index();
+    $tags = new TagController();
+    $getTags = $tags->index();
 
     $currentUser = $_SESSION['user']['id'];
     $user = new UserController($currentUser);
@@ -31,10 +30,11 @@
             </div>
         </div>
 
-        <form action="./inserArticle.php" method="post" enctype="multipart/form-data">
+        <form action="./insertArticle.php" method="post" enctype="multipart/form-data">
             <div class="w-full">
                 <div class="flex flex-col mb-4">
                     <label for="title">Title</label>
+                    <input type="hidden" name="idUser" value="<?php echo $getUser['id'] ?>">
                     <input type="text" id="title" name="title" placeholder="Enter title here" class="w-full p-1 mt-1 rounded-md border-2 border-red-600">
                 </div>
                 <div class="flex flex-col mb-4">
@@ -44,10 +44,10 @@
 
                 <div class="inputTags hidden flex flex-col mb-4">
                     <label for="">Choose Tag</label>
-                    <select name="idCategory[]" multiple class="w-full p-2 mt-1 rounded-md border-2 border-red-600" id="">
-                        <?php if(isset($getCategories)) { ?>
-                            <?php foreach($getCategories as $category) { ?>
-                                <option value="<?php echo $category['id'] ?>"><?php echo $category['nameCategory'] ?></option>
+                    <select name="idTag[]" multiple class="w-full p-2 mt-1 rounded-md border-2 border-red-600" id="">
+                        <?php if(isset($getTags)) { ?>
+                            <?php foreach($getTags as $tag) { ?>
+                                <option value="<?php echo $tag['id'] ?>"><?php echo $tag['nameTag'] ?></option>
                             <?php } ?>
                         <?php } ?>
                     </select>
