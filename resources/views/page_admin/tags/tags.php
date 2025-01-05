@@ -59,11 +59,19 @@
 <?php include('./deleteTag.php') ?>
 
 <script>
+
+    const showFormTag = document.querySelector('.showFormTag');
+    const formTag = document.querySelector('.formTag');
+    
+    // show form ot add tag
+    showFormTag.addEventListener('click', () => {
+        formTag.classList.remove('hidden');
+    })
+
     const closeFormTag = document.querySelectorAll('.closeFormTag');
     closeFormTag.forEach(close => {
         close.addEventListener('click', () => {
             window.location.href = "tags.php";
-            
         })
     })
 </script>
