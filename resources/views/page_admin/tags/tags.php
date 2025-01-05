@@ -1,6 +1,6 @@
 <?php 
     require_once('../../../../isLogged/isOwner.php');
-    require_once __DIR__ . '/../../../../controllers/TagController.php';
+    require __DIR__ . '/../../../../controllers/TagController.php';
 
     $tags = new TagController();
     $getTags = $tags->index();
@@ -35,9 +35,9 @@
                                     <tr class="border-b-[0.2px] text-start hover:bg-gray-100">
                                         <td class="px-4 py-4"><?php echo $index +=1 ?></td>
                                         <td class="text-center px-4 py-4"><?php echo $tag['nameTag'] ?></td>
-                                        <td class="text-center px-4 py-4"><?php echo $tag['idCategory'] ?></td>
+                                        <td class="text-center px-4 py-4"><?php echo $tag['nameCategory'] ?></td>
                                         <td class="px-4 py-4 min-w-96 flex items-center justify-center">
-                                            <a href="./categories.php?idDeleteTag=<?php echo $tag['id'] ?>" class="bg-red-700 rounded-full px-2 py-1 text-white text-[13px] mr-2 hover:bg-red-500 cursor-pointer">
+                                            <a href="./tags.php?idDeleteTag=<?php echo $tag['id'] ?>" class="bg-red-700 rounded-full px-2 py-1 text-white text-[13px] mr-2 hover:bg-red-500 cursor-pointer">
                                                 <i class="fa-regular fa-trash-can"></i>&nbsp;Delete
                                             </a>
                                             <form class="flex flex-row-reverse" action="./updateTag.php" method="post">
@@ -61,8 +61,6 @@
     </div>
 </div>
 <?php include('./addTag.php') ?>
-
-<?php include('./deleteCategory.php') ?>
 
 <?php include('../../layout/_FOOTER.php') ?>
 

@@ -19,6 +19,14 @@
 
             return $result->fetchAll(PDO::FETCH_ASSOC);
         }
+
+        public function store() {
+            $create = new CRUDContoller("tags", ["nameTag", "idCategory"], "", "", [$this->nameTag, $this->idCategory]);
+
+            $result = $create->create();
+
+            return $result;
+        }
     }
 
 ?>
