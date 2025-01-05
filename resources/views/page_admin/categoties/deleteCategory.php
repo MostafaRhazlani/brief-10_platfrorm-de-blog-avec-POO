@@ -37,7 +37,7 @@
             </div>
         </div>
     
-        <h1 class="text-2xl font-semibold text-center mb-4">Are You Sure You Want Delete This Article</h1>
+        <h1 class="text-2xl font-semibold text-center mb-4">Are You Sure You Want Delete This Categoey</h1>
         
         <form action="./deleteCategory.php" method="post">
             

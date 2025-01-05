@@ -46,7 +46,7 @@
                                             <a href="./categories.php?idDeleteCategory=<?php echo $category['id'] ?>" class="bg-red-700 rounded-full px-2 py-1 text-white text-[13px] mr-2 hover:bg-red-500 cursor-pointer">
                                                 <i class="fa-regular fa-trash-can"></i>&nbsp;Delete
                                             </a>
-                                            <form class="flex flex-row-reverse" action="./updateCategory.php" method="post">
+                                            <form class="flex items-center flex-row-reverse" action="./updateCategory.php" method="post">
                                                 
                                                 <input type="hidden" name="idCategory" value="<?php echo $category['id'] ?>">
                                                 <input class="bg-gray-200 py-1 px-2 ml-2 rounded-md outline-none focus:bg-gray-400" value="<?php echo $category['nameCategory'] ?>" type="text" name="nameCategory" placeholder="Change name category">
