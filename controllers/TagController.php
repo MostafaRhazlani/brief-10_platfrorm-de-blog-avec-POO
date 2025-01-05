@@ -24,7 +24,7 @@
             $db = new DB();
             $conn = $db->connect();
 
-            $result = $conn->query("SELECT * from tags JOIN categories on categories.id = tags.idCategory WHERE tags.id = $this->id");
+            $result = $conn->query("SELECT * from tags WHERE tags.id = $this->id");
 
             return $result->fetch();
         }
@@ -33,6 +33,14 @@
             $create = new CRUDContoller("tags", ["nameTag", "idCategory"], "", "", [$this->nameTag, $this->idCategory]);
 
             $result = $create->create();
+
+            return $result;
+        }
+
+        public function update() {
+            $update = new CRUDContoller("tags", ['nameTag', "idCategory"], "id", $this->id, [$this->nameTag, $this->idCategory]);
+
+            $result = $update->update();
 
             return $result;
         }

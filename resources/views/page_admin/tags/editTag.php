@@ -35,6 +35,7 @@
             <div class="w-full">
                 <div class="flex flex-col mb-4">
                     <label for="nameTag">Name Tag</label>
+                    <input type="hidden" name="idTag" value="<?php echo $resultTag['id'] ?>">
                     <input type="text" id="nameTag" name="nameTag" value="<?php echo $resultTag['nameTag'] ?>" placeholder="change name tag" class="w-full p-1 mt-1 rounded-md border-2 border-red-600">
                 </div>
 
