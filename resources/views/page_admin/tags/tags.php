@@ -37,18 +37,12 @@
                                         <td class="text-center px-4 py-4"><?php echo $tag['nameTag'] ?></td>
                                         <td class="text-center px-4 py-4"><?php echo $tag['nameCategory'] ?></td>
                                         <td class="px-4 py-4 min-w-96 flex items-center justify-center">
-                                            <a href="./tags.php?idDeleteTag=<?php echo $tag['id'] ?>" class="bg-red-700 rounded-full px-2 py-1 text-white text-[13px] mr-2 hover:bg-red-500 cursor-pointer">
+                                            <a href="./tags.php?idEditTag=<?php echo $tag['id'] ?>" class="bg-[#301f41] rounded-full px-3 py-1 text-white text-[13px] hover:bg-[#462468] cursor-pointer">
+                                                <i class="fa-solid fa-pen-to-square"></i>&nbsp;Edit
+                                            </a>
+                                            <a href="./tags.php?idDeleteTag=<?php echo $tag['id'] ?>" class="bg-red-700 rounded-full px-2 py-1 text-white text-[13px] ml-2 hover:bg-red-500 cursor-pointer">
                                                 <i class="fa-regular fa-trash-can"></i>&nbsp;Delete
                                             </a>
-                                            <form class="flex flex-row-reverse" action="./updateTag.php" method="post">
-                                                
-                                                <input type="hidden" name="idTag" value="<?php echo $tag['id'] ?>">
-                                                <input class="bg-gray-200 py-1 px-2 ml-2 rounded-md outline-none focus:bg-gray-400" value="<?php echo $tag['nameTag'] ?>" type="text" name="nameTag" placeholder="Change name tag">
-                                                
-                                                <button type="submit" class="bg-[#301f41] rounded-full px-3 py-1 text-white text-[13px] hover:bg-[#462468] cursor-pointer">
-                                                    <i class="fa-solid fa-pen-to-square"></i>&nbsp;Edit
-                                                </button>
-                                            </form>
                                         </td>
                                     </tr>
                                 <?php } ?>
@@ -61,13 +55,16 @@
     </div>
 </div>
 <?php include('./addTag.php') ?>
-
-<?php include('../../layout/_FOOTER.php') ?>
+<?php include('./editTag.php') ?>
 
 <script>
-    document.querySelectorAll('.closeFromTag').forEach(close => {
+    const closeFormTag = document.querySelectorAll('.closeFormTag');
+    closeFormTag.forEach(close => {
         close.addEventListener('click', () => {
-            document.querySelector('.formTag').classList.add('hidden');
+            window.location.href = "tags.php";
+            
         })
     })
 </script>
+
+<?php include('../../layout/_FOOTER.php') ?>

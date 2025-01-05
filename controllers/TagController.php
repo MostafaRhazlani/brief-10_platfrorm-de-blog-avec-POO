@@ -15,9 +15,18 @@
         public function index() {
             $db = new DB();
             $conn = $db->connect();
-            $result = $conn->query("SELECT * from tags JOIN categories on categories.id = tags.idCategory");
+            $result = $conn->query("SELECT tags.*, categories.nameCategory from tags JOIN categories on categories.id = tags.idCategory");
 
             return $result->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        public function getTag() {
+            $db = new DB();
+            $conn = $db->connect();
+
+            $result = $conn->query("SELECT * from tags JOIN categories on categories.id = tags.idCategory WHERE tags.id = $this->id");
+
+            return $result->fetch();
         }
 
         public function store() {
