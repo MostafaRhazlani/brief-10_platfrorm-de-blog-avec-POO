@@ -17,7 +17,7 @@ const showpopupSort = document.querySelector('.showpopupSort');
 const popupSort = document.querySelector('.popupSort');
 
 
-const closeFrom = document.querySelectorAll('.colseForm');
+const closeForm = document.querySelectorAll('.closeForm');
 
 // show form article
 showFormArticle.forEach(show => {
@@ -72,9 +72,8 @@ showpopupSort.addEventListener('click', () => {
 })
 
 // close article
-closeFrom.forEach(close => {
+closeForm.forEach(close => {
     close.addEventListener('click', () => {
-        formArticle.classList.add('hidden');
         window.location.href = "/resources/views/blog/blog.php"
     })
 })
