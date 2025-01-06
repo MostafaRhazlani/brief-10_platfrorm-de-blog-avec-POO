@@ -146,5 +146,6 @@
 </div>
 
 <?php include('./addArticle.php') ?>
+<?php include('./editArticle.php') ?>
 
 <?php include('../layout/_FOOTER.php') ?>
