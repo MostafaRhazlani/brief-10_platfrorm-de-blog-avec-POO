@@ -1,27 +1,148 @@
 <?php 
     session_start();
-    // require_once('../../../connectdb/connectiondb.php'); 
-    
-    // $getAllTags = mysqli_query($conn, "SELECT * FROM categories");
+    require_once __DIR__ . '/../../../controllers/ArticleController.php';
+    require_once __DIR__ . '/../../../controllers/TagController.php';
 
-    // if(isset($_POST['idTag']) && $_POST['idTag'] != 0) {
-    //     $idTag = isset($_POST['idTag']) ? $_POST['idTag'] : 0;
-    //     $getArticles = mysqli_query($conn, "SELECT articles.*, users.username, users.email, users.imageProfile FROM tags 
-    //                                         INNER JOIN articles ON articles.id = tags.idArticle 
-    //                                         INNER JOIN users ON users.id = articles.idUser 
-    //                                         WHERE idCategory = $idTag 
-    //                                         ORDER BY id DESC");
-    // } else {
-    //     $getArticles = mysqli_query($conn,"SELECT articles.*, users.username, users.email, users.imageProfile FROM articles 
-    //                                        INNER JOIN users ON users.id = articles.idUser 
-    //                                        ORDER BY id DESC");
-    // }
+    $articles = new ArticleController();
+    $getArticles = $articles->index();
 
-    
+    $tags = new TagController();
+    $getAllTags = $tags->index();
 ?>
 
 <?php include('../layout/_HEAD.php') ?>
 <?php include('../layout/_SIDEBAR.php') ?>
 
+<div class="w-full md:w-4/6 lg:w-[40%] md:mx-auto pt-24">
+    <div class="w-full bg-white shadow-[0px_0px_2px_#9b9b9b] rounded-lg">
+        <div class="flex flex-col sm:flex-row gap-4 w-full p-4">
+            <?php if(isset($_SESSION['user'])) { ?>
+                <div class="showFormArticle mb-4 sm:mb-0 py-2 sm:w-2/4 px-5 rounded-md bg-gray-200 text-gray-500 font-medium cursor-pointer hover:bg-gray-300 flex items-center gap-2">
+                    <i class="fa-solid fa-newspaper"></i>
+                    <h1>create article</h1>
+                </div>
+            <?php } ?>
+            <div class="sm:w-2/4 relative">
+                <div class="showpopupSort w-full h-full rounded-md px-5 bg-red-600 text-white font-medium cursor-pointer hover:bg-red-500 flex items-center gap-2">
+                    <span>sort by tag</span>
+                </div>
+                <div class="popupSort hidden absolute w-full flex flex-col bg-white shadow-[0px_0px_5px_1px_#c2c2c2] p-1 rounded-sm top-12">
+                    <?php if(isset($getAllTags)) { ?>
+                        <form action="./blog.php" method="post">
+                            <input type="hidden" name="idCategory" value="0">
+                            <button class="w-full text-start px-2 py-1 hover:bg-gray-200">All</button>
+                        </form>
+                        <?php foreach($getAllTags as $tag) { ?>
+                            <form action="./blog.php" method="post">
+                                <input type="hidden" name="idTag" value="<?php echo $tag['id'] ?>">
+                                <button class="w-full text-start px-2 py-1 hover:bg-gray-200"><?php echo $tag['nameCategory'] ?></button>
+                            </form>
+                        <?php } ?>
+                    <?php } ?>
+                </div>
+            </div>
+        </div>
+        <?php if(isset($getArticles)) { ?>
+            <?php foreach($getArticles as $article) { ?>
+                <div class="w-full mb-3">
+                    <div class="h-80 flex items-center justify-center bg-[#200E32]">
+                        <img class="h-full object-contain" src="../../img/images/<?php echo $article['image'] ?>" alt="">
+                    </div>
+                    <div class="px-6 py-4">
+                        <div class="flex justify-between items-center">
+                            <div class="flex">
+                                <img class="mr-3 object-cover w-12 h-12 rounded-full" src="/resources/img/images/<?php echo $article['imageProfile'] ?>" alt="">
+                                
+                                <div>
+                                    <p class="font-semibold"><?php echo $article['username'] ?></p>
+                                    <p class="text-gray-500 text-sm"><?php echo $article['email'] ?></p>
+                                </div>
+                            </div>
+                            <div class="relative">
+                                <span class="showActions text-2xl cursor-pointer hover:text-red-600" data-id="<?php echo $article['id'] ?>">
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </span>
+    
+                                <div class="popupActions absolute hidden -right-2 mt-2 w-32 bg-white shadow-[0px_0px_5px_1px_#c2c2c2] p-1 rounded-sm" data-id="<?php echo $article['id'] ?>">
+                                    <?php if($_SESSION['user']['id'] == $article['idUser']) { ?>
+                                        <a href="./blog.php?idArticle=<?php echo $article['id'] ?>" class="flex items-center text-sm p-1 hover:bg-gray-200 cursor-pointer rounded-sm">
+                                            <i class="fa-solid fa-pen-to-square"></i>&nbsp;Edit article
+                                        </a>
+                                        <a href="./blog.php?idDeleteArticle=<?php echo $article['id'] ?>" class="flex items-center text-red-700 text-sm p-1 hover:bg-red-200 cursor-pointer rounded-sm">
+                                            <i class="fa-solid fa-trash-can"></i>&nbsp;Delete article
+                                        </a>
+                                    <?php } else { ?>
+                                        <a href="#" class="showFormEditArticle flex items-center text-sm p-1 hover:bg-gray-200 cursor-pointer rounded-sm">
+                                            <i class="fa-solid fa-bug"></i>&nbsp;Report
+                                        </a>
+                                    <?php } ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex gap-1 mb-2 flex-wrap mt-6">
+                            <?php
+                                $idArticle = $article['id'];
+                                $tagsOfArticle = new ArticleController($idArticle);
+                                $getTagsOfArticle = $tagsOfArticle->getTagsOfArticle();
+                            ?>
+                            <?php if(isset($getTagsOfArticle)) {?>
+                                <?php foreach($getTagsOfArticle as $tag) {?>
+                                        <span class="bg-blue-400 rounded-sm py-1 px-2 text-[12px] text-white"><?php echo $tag['nameTag'] ?></span>
+                                <?php } ?>
+                            <?php } ?>
+                        </div>
+                        <div class="mb-4">
+                            <h1 class="font-semibold text-3xl mb-2">
+                                    <a href="./detailsArticle.php?idArticle=<?php echo $article['id'] ?>" class="hover:text-red-300">
+                                        <?php echo $article['title'] ?>
+                                    </a>
+                                </h1>
+                            <p class="break-words">
+                                <?php echo $article['content'] ?>
+                            </p>
+                        </div>
+                        <div class="flex justify-between border-b-2 border-t-2 py-2">
+                            <div class="flex gap-5">
+                                <div class="flex items-center">
+                                    <span class="mr-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="#cf4c4c" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"/></svg>
+                                    </span>
+                                    <!-- count total likes -->
+                                    10
+                                </div>
+                                <div class="flex items-center">
+                                    <!-- icon comments -->
+                                    <span class="mr-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 -960 960 960" fill="#6d6972"><path d="M880-80 720-240H320q-33 0-56.5-23.5T240-320v-40h440q33 0 56.5-23.5T760-440v-280h40q33 0 56.5 23.5T880-640v560ZM160-473l47-47h393v-280H160v327ZM80-280v-520q0-33 23.5-56.5T160-880h440q33 0 56.5 23.5T680-800v280q0 33-23.5 56.5T600-440H240L80-280Zm80-240v-280 280Z"/></svg>
+                                    </span>
+                                    12
+                                </div>
+                            </div>
+                            <!-- icon views -->
+                            <div class="flex items-center">
+                                <a href="#" class="mr-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="hover:fill-[#200E32] transition duration-300 ease-in-out" height="20px" viewBox="0 -960 960 960" width="20px" fill="#6d6972"><path d="M480-320q75 0 127.5-52.5T660-500q0-75-52.5-127.5T480-680q-75 0-127.5 52.5T300-500q0 75 52.5 127.5T480-320Zm0-72q-45 0-76.5-31.5T372-500q0-45 31.5-76.5T480-608q45 0 76.5 31.5T588-500q0 45-31.5 76.5T480-392Zm0 192q-146 0-266-81.5T40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200Zm0-300Zm0 220q113 0 207.5-59.5T832-500q-50-101-144.5-160.5T480-720q-113 0-207.5 59.5T128-500q50 101 144.5 160.5T480-280Z"/></svg>
+                                </a>
+                                <p>0 views</p>
+                            </div>
+                        </div>
+                        <div class="flex justify-between py-2 mb-6">
+                            <div class="flex gap-3">
+                                
+                                
+                            </div>
+                            <div class="flex">
+                                <!-- icons saves -->
+                                <a href="#" class="hover:scale-110 transition duration-300 ease-in-out cursor-pointer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#6d6972"><path d="M200-120v-640q0-33 23.5-56.5T280-840h400q33 0 56.5 23.5T760-760v640L480-240 200-120Zm80-122 200-86 200 86v-518H280v518Zm0-518h400-400Z"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
+        <?php } ?>
+    </div>
+</div>
 
 <?php include('../layout/_FOOTER.php') ?>

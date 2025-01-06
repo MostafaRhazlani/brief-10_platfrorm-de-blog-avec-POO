@@ -21,7 +21,7 @@
             $db = new DB();
             $conn = $db->connect();
 
-            $result = $conn->query("SELECT articles.*, users.username FROM articles JOIN users ON users.id = articles.idUser");
+            $result = $conn->query("SELECT articles.*, users.username, users.email, users.imageProfile FROM articles JOIN users ON users.id = articles.idUser");
 
             return $result->fetchAll(PDO::FETCH_ASSOC);
         }
@@ -58,6 +58,15 @@
                 $params = [$this->id, $tag];
                 $result->execute($params);
             }
+        }
+
+        public function getTagsOfArticle() {
+            $db = new DB();
+            $conn = $db->connect();
+
+            $result = $conn->query("SELECT tags.nameTag FROM tags_articles 
+                                    JOIN tags ON tags.id = tags_articles.idTag WHERE tags_articles.idArticle = $this->id");
+            return $result;
         }
 
         public function destroy() {
