@@ -21,7 +21,7 @@
             $db = new DB();
             $conn = $db->connect();
 
-            $result = $conn->query("SELECT articles.*, users.username, users.email, users.imageProfile FROM articles JOIN users ON users.id = articles.idUser");
+            $result = $conn->query("SELECT articles.*, users.username, users.email, users.imageProfile FROM articles JOIN users ON users.id = articles.idUser ORDER BY id DESC");
 
             return $result->fetchAll(PDO::FETCH_ASSOC);
         }
