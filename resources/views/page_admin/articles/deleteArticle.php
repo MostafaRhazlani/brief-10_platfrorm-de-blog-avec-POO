@@ -1,6 +1,7 @@
 <?php
     require_once('../../../../isLogged/isOwner.php');
-    require_once('../../../../connectdb/connectiondb.php');
+    require_once __DIR__ . '/../../../../controllers/ArticleController.php';
+
     //  check if the id exist in url and get it
     if(isset($_GET['idDeleteArticle'])) {
         $getIdArticle = $_GET['idDeleteArticle'];
@@ -11,24 +12,18 @@
             });
         </script>";
 
-        $getArticle = mysqli_query($conn, "SELECT id FROM articles WHERE id = $getIdArticle");
-        $resultArticle = mysqli_fetch_assoc($getArticle);
-        
+        $getArticle = new ArticleController($getIdArticle);
+
+        $resultArticle = $getArticle->getArticle(); 
     }
 
-    if(isset($_POST['idArticle'])) {
+    if($_SERVER['REQUEST_METHOD'] === 'POST') {
         $idArticle = $_POST['idArticle'];
 
-        $deleteFromTags = mysqli_prepare($conn, "DELETE FROM tags WHERE idArticle = ?");
-        
-        mysqli_stmt_bind_param($deleteFromTags, 'i', $idArticle);
-        if(mysqli_stmt_execute($deleteFromTags)) {
-            
-            $deleteArticle = mysqli_prepare($conn, "DELETE FROM articles WHERE id = ?");
-            mysqli_stmt_bind_param($deleteArticle, 'i', $idArticle);
-            if(mysqli_stmt_execute($deleteArticle)) {
-                header('location: articles.php');
-            }
+        $deleteArticle = new ArticleController($idArticle);
+
+        if($deleteArticle->destroy()) {
+            header('location: articles.php');
         }
     }
 

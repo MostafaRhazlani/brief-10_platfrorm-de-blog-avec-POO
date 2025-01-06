@@ -34,6 +34,12 @@
             return $result;
         }
 
+        public function getArticle() {
+            $getOne = new CRUDContoller("articles", "*", "id", $this->id);
+
+            return $getOne->conditionSelect();
+        }
+
         public function lastArticleAdded() {
             $db = new DB();
             $conn = $db->connect();
@@ -52,6 +58,12 @@
                 $params = [$this->id, $tag];
                 $result->execute($params);
             }
+        }
+
+        public function destroy() {
+            $destroy = new CRUDContoller("articles", "", "id", $this->id);
+
+            return $destroy->destroy();
         }
     }
 
