@@ -58,7 +58,7 @@
 
                     <div class="inputTags hidden flex flex-col mb-4">
                         <label for="">Choose Tag</label>
-                        <select name="idCategory[]" multiple class="w-full p-2 mt-1 rounded-md border-2 border-red-600" id="">
+                        <select name="idTag[]" multiple class="w-full p-2 mt-1 rounded-md border-2 border-red-600" id="">
                             <?php if(isset($getTags)) { ?>
                                 <?php foreach($getTags as $tag) { ?>
                                     <option value="<?php echo $tag['id'] ?>"><?php echo $tag['nameTag'] ?></option>

@@ -40,6 +40,11 @@
             return $getOne->conditionSelect();
         }
 
+        public function update() {
+            $updateArticle = new CRUDContoller("articles", ['title', 'content', 'image'], "id", $this->id, [$this->title, $this->content, $this->image]);
+            return $updateArticle->update();
+        }
+
         public function lastArticleAdded() {
             $db = new DB();
             $conn = $db->connect();
@@ -47,6 +52,12 @@
             $result = $conn->query("SELECT id FROM articles ORDER BY id DESC LIMIT 1");
 
             return $result->fetch();
+        }
+
+        public function destroy() {
+            $destroy = new CRUDContoller("articles", "", "id", $this->id);
+
+            return $destroy->destroy();
         }
 
         public function storeTags() {
@@ -69,8 +80,8 @@
             return $result;
         }
 
-        public function destroy() {
-            $destroy = new CRUDContoller("articles", "", "id", $this->id);
+        public function destroyTagsOfArticle() {
+            $destroy = new CRUDContoller("tags_articles", "", "idArticle", $this->id);
 
             return $destroy->destroy();
         }
