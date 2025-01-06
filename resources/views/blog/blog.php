@@ -147,5 +147,6 @@
 
 <?php include('./addArticle.php') ?>
 <?php include('./editArticle.php') ?>
+<?php include('./deleteArticle.php') ?>
 
 <?php include('../layout/_FOOTER.php') ?>
