@@ -1,35 +1,38 @@
 <?php
-    require_once('../../../connectdb/connectiondb.php');
+    require_once __DIR__ . '/../../../controllers/CommentController.php';
 
         //  check if the id exist in url and get it
-        $getIdArticle = isset($_GET['idArticle']) ? $_GET['idArticle'] : 0;
-        
-        if(isset($_GET['idEditComment'])) {
-            $idEditComment = $_GET['idEditComment'];
-            echo "<script>
-                document.addEventListener('DOMContentLoaded', () => {
-                    const formEdit = document.querySelector('.formEdit');
-                    formEdit.classList.remove('hidden');
-                });
-            </script>";
+        if(isset($_GET['idArticle'])) {
+            $getIdArticle = $_GET['idArticle'];
 
-            $getComment = mysqli_query($conn, "SELECT id, content FROM comments WHERE id = $idEditComment");
-            $resultComment = mysqli_fetch_assoc($getComment);
+            if(isset($_GET['idEditComment'])) {
+                $idEditComment = $_GET['idEditComment'];
+                echo "<script>
+                    document.addEventListener('DOMContentLoaded', () => {
+                        const formEdit = document.querySelector('.formEdit');
+                        formEdit.classList.remove('hidden');
+                    });
+                </script>";
+    
+                $getComment = new CommentController($idEditComment);
+                $resultComment = $getComment->getComment();
+            }
         }
+        
 
             
         
-        $idComment = isset($_POST['idComment']) ? $_POST['idComment'] : 0;
-        if($idComment) {
-            $idArticle = $_POST['idArticle'];
-            $content = $_POST['content'];
-            $updateComment = mysqli_prepare($conn, "UPDATE comments SET content = ? WHERE id = ?");
-            mysqli_stmt_bind_param($updateComment, 'si', $content, $idComment);
-            if(mysqli_stmt_execute($updateComment)) {
+        // $idComment = isset($_POST['idComment']) ? $_POST['idComment'] : 0;
+        // if($idComment) {
+        //     $idArticle = $_POST['idArticle'];
+        //     $content = $_POST['content'];
+        //     $updateComment = mysqli_prepare($conn, "UPDATE comments SET content = ? WHERE id = ?");
+        //     mysqli_stmt_bind_param($updateComment, 'si', $content, $idComment);
+        //     if(mysqli_stmt_execute($updateComment)) {
                 
-                header("location: detailsArticle.php?idArticle=$idArticle");
-            }
-        }
+        //         header("location: detailsArticle.php?idArticle=$idArticle");
+        //     }
+        // }
 
 ?>
 

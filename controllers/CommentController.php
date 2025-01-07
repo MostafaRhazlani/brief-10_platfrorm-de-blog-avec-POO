@@ -2,11 +2,13 @@
     require_once __DIR__ . '/CRUDController.php';
 
     class CommentController {
+        private $id;
         private $content;
         private $idArticle;
         private $idUser;
 
-        public function __construct($content = "", $idArticle = "", $idUser = ""){
+        public function __construct($id = "", $content = "", $idArticle = "", $idUser = ""){
+            $this->id = $id;
             $this->content = $content;
             $this->idArticle = $idArticle;
             $this->idUser = $idUser;
@@ -25,6 +27,12 @@
             $insertComment = new CRUDContoller("comments", ['content', 'idArticle', 'idUser'], "", "", [$this->content, $this->idArticle, $this->idUser]);
 
             return $insertComment->create();
+        }
+
+        public function getComment() {
+            $getOne = new CRUDContoller("comments", ['id', 'content'], "id", $this->id);
+
+            return $getOne->conditionSelect();
         }
 
         public function totalComments() {

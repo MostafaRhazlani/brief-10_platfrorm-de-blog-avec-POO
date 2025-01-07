@@ -10,7 +10,7 @@
         $detailArticle = new ArticleController($idArticle);
         $resultArticle = $detailArticle->detailArticle();
 
-        $comments = new CommentController("", $idArticle);
+        $comments = new CommentController("", "", $idArticle);
         $getComments = $comments->index();
     }
 
