@@ -40,6 +40,14 @@
             return $getOne->conditionSelect();
         }
 
+        public function detailArticle() {
+            $db = new DB();
+            $conn = $db->connect();
+
+            $result = $conn->query("SELECT articles.*, users.username, users.email, users.imageProfile FROM articles JOIN users ON users.id = articles.idUser WHERE articles.id = $this->id");
+            return $result->fetch(PDO::FETCH_ASSOC);
+        }
+
         public function update() {
             $updateArticle = new CRUDContoller("articles", ['title', 'content', 'image'], "id", $this->id, [$this->title, $this->content, $this->image]);
             return $updateArticle->update();
