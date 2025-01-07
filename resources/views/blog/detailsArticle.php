@@ -1,7 +1,6 @@
 <?php 
     session_start();
     require_once __DIR__ . '/../../../controllers/ArticleController.php';
-    require_once __DIR__ . '/../../../controllers/TagController.php';
     require_once __DIR__ . '/../../../controllers/LikeController.php';
     require_once __DIR__ . '/../../../controllers/CommentController.php';
     
@@ -11,14 +10,10 @@
         $detailArticle = new ArticleController($idArticle);
         $resultArticle = $detailArticle->detailArticle();
 
-        $comments = new CommentController($idArticle);
+        $comments = new CommentController("", $idArticle);
         $getComments = $comments->index();
     }
 
-    $tags = new TagController();
-    $getAllTags = $tags->index();
-
-    // $getComments = mysqli_query($conn, "SELECT comments.*, email, username, imageProfile, idRole FROM comments JOIN users ON users.id = comments.idUser WHERE idArticle = $idArticle ORDER BY id DESC");
 ?>
 
 <?php include('../layout/_HEAD.php') ?>
