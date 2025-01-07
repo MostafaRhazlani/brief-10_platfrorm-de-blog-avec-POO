@@ -36,6 +36,12 @@
 
             return $result->execute($params);
         }
+
+        public function totalLikes() {
+            $totalLikes = new CRUDContoller("likearticle");
+
+            return $totalLikes->count();
+        }
     }
 
 ?>
