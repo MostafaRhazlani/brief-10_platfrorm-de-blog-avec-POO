@@ -1,5 +1,8 @@
 <?php
-    require_once('../../../connectdb/connectiondb.php');
+
+use PSpell\Config;
+
+    require_once __DIR__ . '/../../../controllers/CommentController.php';
 
         //  check if the id exist in url and get it
         $getIdArticle = isset($_GET['idArticle']) ? $_GET['idArticle'] : 0;
@@ -13,23 +16,21 @@
                 });
             </script>";
 
-            $getComment = mysqli_query($conn, "SELECT id FROM comments WHERE id = $getIdComment");
-            $resultComment = mysqli_fetch_assoc($getComment);
+            $getComment = new CommentController($getIdComment);
+            $resultComment = $getComment->getComment();
         }
 
             
-        
-        $idComment = isset($_POST['idComment']) ? $_POST['idComment'] : 0;
-        if($idComment) {
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $idComment = $_POST['idComment'];
             $idArticle = $_POST['idArticle'];
-            
-            $deleteComment = mysqli_prepare($conn, "DELETE FROM comments WHERE id = ?");
-            mysqli_stmt_bind_param($deleteComment, 'i', $idComment);
-            if(mysqli_stmt_execute($deleteComment)) {
-                
+
+            $deleteComment = new CommentController($idComment);
+            if($deleteComment->destroy()) {
                 header("location: detailsArticle.php?idArticle=$idArticle");
             }
         }
+            
 
 ?>
 

@@ -41,6 +41,11 @@
             return $updateComment->update();
         }
 
+        public function destroy() {
+            $deletComment = new CRUDContoller("comments", "", "id", $this->id);
+            return $deletComment->destroy();
+        }
+
         public function totalComments() {
             $totalComments = new CRUDContoller("comments");
 

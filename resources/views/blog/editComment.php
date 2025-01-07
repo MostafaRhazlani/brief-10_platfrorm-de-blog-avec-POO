@@ -24,7 +24,7 @@
             $idArticle = $_POST['idArticle'];
             $content = $_POST['content'];
 
-            $updateComment = new CommentController($idComment, $content, $idArticle);
+            $updateComment = new CommentController($idComment, $content);
             if($updateComment->update()) {
                 header("location: detailsArticle.php?idArticle=$idArticle");
             }
