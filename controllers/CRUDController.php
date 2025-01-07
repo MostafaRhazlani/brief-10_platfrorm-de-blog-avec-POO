@@ -105,7 +105,7 @@
             $db = new DB();
             $conn = $db->connect();
 
-            $result = $conn->query("SELECT count(*) FROM $this->nameTable");
+            $result = $conn->query("SELECT count(id) FROM $this->nameTable");
 
             return $result->fetchColumn();
         }
