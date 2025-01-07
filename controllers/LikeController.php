@@ -26,6 +26,16 @@
 
             return $result;
         }
+
+        public function destroy() {
+            $db = new DB();
+            $conn = $db->connect();
+
+            $params = [$this->idArticle, $this->idUser];
+            $result = $conn->prepare("DELETE FROM likearticle WHERE idArticle = ? AND idUser = ?");
+
+            return $result->execute($params);
+        }
     }
 
 ?>

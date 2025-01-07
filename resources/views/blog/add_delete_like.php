@@ -23,7 +23,17 @@
                     header("location: detailsArticle.php?idArticle=$idArticle");
                 }
             }
-        }
+        } else {
+            $deleteLike = new LikeController($idArticle, $idUser);
+
+            if($deleteLike->destroy()) {
+                if($currentPage === $redirectPage) {
+                    header('location: blog.php');
+                } else {
+                    header("location: detailsArticle.php?idArticle=$idArticle");
+                }
+            }
+        } 
     }
 
 ?>
