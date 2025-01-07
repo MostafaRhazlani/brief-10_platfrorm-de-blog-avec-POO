@@ -31,8 +31,14 @@
 
         public function getComment() {
             $getOne = new CRUDContoller("comments", ['id', 'content'], "id", $this->id);
-
+            
             return $getOne->conditionSelect();
+        }
+        
+        public function update() {
+            $updateComment = new CRUDContoller("comments", ['content'], "id", $this->id, [$this->content]);
+
+            return $updateComment->update();
         }
 
         public function totalComments() {

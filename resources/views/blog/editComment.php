@@ -19,20 +19,16 @@
             }
         }
         
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $idComment = $_POST['idComment'];
+            $idArticle = $_POST['idArticle'];
+            $content = $_POST['content'];
 
-            
-        
-        // $idComment = isset($_POST['idComment']) ? $_POST['idComment'] : 0;
-        // if($idComment) {
-        //     $idArticle = $_POST['idArticle'];
-        //     $content = $_POST['content'];
-        //     $updateComment = mysqli_prepare($conn, "UPDATE comments SET content = ? WHERE id = ?");
-        //     mysqli_stmt_bind_param($updateComment, 'si', $content, $idComment);
-        //     if(mysqli_stmt_execute($updateComment)) {
-                
-        //         header("location: detailsArticle.php?idArticle=$idArticle");
-        //     }
-        // }
+            $updateComment = new CommentController($idComment, $content, $idArticle);
+            if($updateComment->update()) {
+                header("location: detailsArticle.php?idArticle=$idArticle");
+            }
+        }
 
 ?>
 
