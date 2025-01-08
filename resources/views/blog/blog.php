@@ -59,6 +59,7 @@
                                     <p class="text-gray-500 text-sm"><?php echo $article['email'] ?></p>
                                 </div>
                             </div>
+                            <?php if(isset($_SESSION['user'])) { ?>
                             <div class="relative">
                                 <span class="showActions text-2xl cursor-pointer hover:text-red-600" data-id="<?php echo $article['id'] ?>">
                                     <i class="fa-solid fa-ellipsis-vertical"></i>
@@ -79,6 +80,7 @@
                                     <?php } ?>
                                 </div>
                             </div>
+                            <?php } ?>
                         </div>
                         <div class="flex gap-1 mb-2 flex-wrap mt-6">
                             <?php

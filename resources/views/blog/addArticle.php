@@ -5,10 +5,12 @@
     $tags = new TagController();
     $getTags = $tags->index();
 
-    $currentUser = $_SESSION['user']['id'];
-    $user = new UserController($currentUser);
-
-    $getUser = $user->getUser();
+    if(isset($_SESSION['user'])) {
+        $currentUser = $_SESSION['user']['id'];
+        $user = new UserController($currentUser);
+    
+        $getUser = $user->getUser();
+    }
     
 ?>
 
