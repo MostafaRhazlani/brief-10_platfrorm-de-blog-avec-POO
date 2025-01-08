@@ -6,7 +6,7 @@
         $idArticle = $_POST['idArticle'];
         $idUser = $_POST['idUser'];
 
-        $insertComment = new CommentController($content, $idArticle, $idUser);
+        $insertComment = new CommentController("", $content, $idArticle, $idUser);
 
         // insert new comment
         if($insertComment->store()) {
