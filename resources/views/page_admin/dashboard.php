@@ -18,53 +18,55 @@
 <?php include('../layout/_HEAD.php') ?>
 <?php include('../layout/_SIDEBAR.php') ?>
 
-<div class="p-4 mt-20 sm:grid sm:grid-cols-2 sm:gap-4 md:ml-[70px] lg:grid-cols-4 mb-10 md:mb-0">
-    <div class="bg-white shadow-[0px_0px_4px_#c9c9c9] p-4 rounded-lg mb-4 sm:mb-0">
-        <div class="flex gap-3 items-center mb-6">
-            <span class="w-12 h-12 text-2xl text-white rounded-full bg-red-400 flex items-center justify-center">
-                <i class="fa-regular fa-heart"></i>
-            </span>
-            <p class="text-xl"> Likes</p>
+<div class="w-full md:w-5/6">
+    <div class="p-4 mt-20 sm:grid sm:grid-cols-2 sm:gap-4 lg:grid-cols-4 mb-10 md:mb-0">
+        <div class="bg-white shadow-[0px_0px_4px_#c9c9c9] p-4 rounded-lg mb-4 sm:mb-0">
+            <div class="flex gap-3 items-center mb-6">
+                <span class="w-12 h-12 text-2xl text-white rounded-full bg-red-400 flex items-center justify-center">
+                    <i class="fa-regular fa-heart"></i>
+                </span>
+                <p class="text-xl"> Likes</p>
+            </div>
+                <p class="text-5xl font-bold"><?php echo $totalLikes ?></p>
+            <div class="mt-4 w-full h-4 rounded-full py-2 px-1 border-2 flex items-center">
+                <div class="totalLikes bg-red-600 h-3 rounded-full"></div>
+            </div>
         </div>
-            <p class="text-5xl font-bold"><?php echo $totalLikes ?></p>
-        <div class="mt-4 w-full h-4 rounded-full py-2 px-1 border-2 flex items-center">
-            <div class="totalLikes bg-red-600 h-3 rounded-full"></div>
+        <div class="bg-white shadow-[0px_0px_4px_#c9c9c9] p-4 rounded-lg mb-4 sm:mb-0">
+            <div class="flex gap-3 items-center mb-6">
+                <span class="w-12 h-12 text-2xl text-white rounded-full bg-blue-400 flex items-center justify-center">
+                    <i class="fa-regular fa-comment"></i>
+                </span>
+                <p class="text-xl"> Comments</p>
+            </div>
+                <p class="text-5xl font-bold"><?php echo $totalComments ?></p>
+            <div class="mt-4 w-full h-4 rounded-full py-2 px-1 border-2 flex items-center">
+                <div class="totalComments bg-blue-600 h-3 rounded-full"></div>
+            </div>
         </div>
-    </div>
-    <div class="bg-white shadow-[0px_0px_4px_#c9c9c9] p-4 rounded-lg mb-4 sm:mb-0">
-        <div class="flex gap-3 items-center mb-6">
-            <span class="w-12 h-12 text-2xl text-white rounded-full bg-blue-400 flex items-center justify-center">
-                <i class="fa-regular fa-comment"></i>
-            </span>
-            <p class="text-xl"> Comments</p>
+        <div class="bg-white shadow-[0px_0px_4px_#c9c9c9] p-4 rounded-lg mb-4 sm:mb-0">
+            <div class="flex gap-3 items-center mb-6">
+                <span class="w-12 h-12 text-2xl text-white rounded-full bg-teal-400 flex items-center justify-center">
+                    <i class="fa-solid fa-user-tie"></i>
+                </span>
+                <p class="text-xl"> Users</p>
+            </div>
+                <p class="text-5xl font-bold"><?php echo $totalUsers ?></p>
+            <div class="mt-4 w-full h-4 rounded-full py-2 px-1 border-2 flex items-center">
+                <div class="totalUsers bg-teal-600 h-3 rounded-full"></div>
+            </div>
         </div>
-            <p class="text-5xl font-bold"><?php echo $totalComments ?></p>
-        <div class="mt-4 w-full h-4 rounded-full py-2 px-1 border-2 flex items-center">
-            <div class="totalComments bg-blue-600 h-3 rounded-full"></div>
-        </div>
-    </div>
-    <div class="bg-white shadow-[0px_0px_4px_#c9c9c9] p-4 rounded-lg mb-4 sm:mb-0">
-        <div class="flex gap-3 items-center mb-6">
-            <span class="w-12 h-12 text-2xl text-white rounded-full bg-teal-400 flex items-center justify-center">
-                <i class="fa-solid fa-user-tie"></i>
-            </span>
-            <p class="text-xl"> Users</p>
-        </div>
-            <p class="text-5xl font-bold"><?php echo $totalUsers ?></p>
-        <div class="mt-4 w-full h-4 rounded-full py-2 px-1 border-2 flex items-center">
-            <div class="totalUsers bg-teal-600 h-3 rounded-full"></div>
-        </div>
-    </div>
-    <div class="bg-white shadow-[0px_0px_4px_#c9c9c9] p-4 rounded-lg mb-4 sm:mb-0">
-        <div class="flex gap-3 items-center mb-6">
-            <span class="w-12 h-12 text-2xl text-white rounded-full bg-purple-400 flex items-center justify-center">
-                <i class="fa-solid fa-newspaper"></i>
-            </span>
-            <p class="text-xl"> Articles</p>
-        </div>
-            <p class="text-5xl font-bold"><?php echo $totalArticles ?></p>
-        <div class="mt-4 w-full h-4 rounded-full py-2 px-1 border-2 flex items-center">
-            <div class="totalArticles bg-purple-600 h-3 rounded-full"></div>
+        <div class="bg-white shadow-[0px_0px_4px_#c9c9c9] p-4 rounded-lg mb-4 sm:mb-0">
+            <div class="flex gap-3 items-center mb-6">
+                <span class="w-12 h-12 text-2xl text-white rounded-full bg-purple-400 flex items-center justify-center">
+                    <i class="fa-solid fa-newspaper"></i>
+                </span>
+                <p class="text-xl"> Articles</p>
+            </div>
+                <p class="text-5xl font-bold"><?php echo $totalArticles ?></p>
+            <div class="mt-4 w-full h-4 rounded-full py-2 px-1 border-2 flex items-center">
+                <div class="totalArticles bg-purple-600 h-3 rounded-full"></div>
+            </div>
         </div>
     </div>
 </div>

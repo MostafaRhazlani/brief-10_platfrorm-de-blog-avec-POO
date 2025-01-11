@@ -10,7 +10,7 @@
 <?php include('../../layout/_HEAD.php') ?>
 <?php include('../../layout/_SIDEBAR.php') ?>
 
-<div class="md:pl-20 w-full h-screen pt-32 p-3">
+<div class="md:w-5/6 w-full h-screen pt-32 p-3">
     <div class="mb-3 flex flex-col md:flex-row justify-between">
         <button class="showFormArticle py-2 px-4 bg-red-600 rounded-md hover:bg-red-500 text-white md:mr-3 mt-2 md:mt-0"><i class="fa-solid fa-circle-plus"></i> Add Article</button>
         <button class="py-2 px-4 bg-red-600 rounded-md hover:bg-red-500 text-white"><i class="fa-solid fa-arrow-down-a-z"></i> Sort Articles</button>

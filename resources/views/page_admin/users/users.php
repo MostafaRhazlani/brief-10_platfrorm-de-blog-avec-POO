@@ -9,7 +9,7 @@
 <?php include('../../layout/_HEAD.php') ?>
 <?php include('../../layout/_SIDEBAR.php') ?>
 
-<div class="md:pl-20 w-full h-screen pt-28 p-3">
+<div class="md:w-5/6 w-full h-screen pt-28 p-3">
     <div class="mb-3 flex flex-col md:flex-row">
         <button class=" py-2 px-4 bg-red-600 rounded-md hover:bg-red-500 text-white mb-6 md:mb-0 md:mr-6"><i class="fa-solid fa-arrow-down-a-z"></i> Sort Categories</button>
 

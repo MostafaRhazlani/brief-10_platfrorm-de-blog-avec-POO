@@ -12,7 +12,7 @@
 <?php include('../../layout/_HEAD.php') ?>
 <?php include('../../layout/_SIDEBAR.php') ?>
 
-<div class="md:pl-20 w-full h-screen pt-28 p-3">
+<div class="md:w-5/6 w-full h-screen pt-28 p-3">
     <div class="mb-3 flex flex-col md:flex-row justify-between">
         <form action="./insertCategory.php" method="post">
             <div class="flex flex-col md:flex-row-reverse mb-5 md:mb-0">
