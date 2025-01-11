@@ -3,7 +3,12 @@
     require_once __DIR__ . '/../../../controllers/ArticleController.php';
     require_once __DIR__ . '/../../../controllers/LikeController.php';
     require_once __DIR__ . '/../../../controllers/CommentController.php';
+    require_once __DIR__ . '/../../../controllers/UserController.php';
     
+    $id = isset($_SESSION['user']) ? $_SESSION['user']['id'] : 0;
+    $user = new UserController($id);
+    $idUser = $user->getUser();
+
     if(isset($_GET['idArticle'])) {
         $idArticle = $_GET['idArticle'];
 
@@ -19,11 +24,11 @@
 <?php include('../layout/_HEAD.php') ?>
 <?php include('../layout/_SIDEBAR.php') ?>
 
-<div class="w-full h-screen md:w-4/6 md:mx-auto pt-24">
+<div class="hideScroll w-full md:h-screen overflow-scroll md:w-4/6 md:pt-24">
     <div class="w-full bg-[#202225] text-white rounded-lg">
         <div class="w-full mb-3">
-            <div class="px-6 py-4">
-                <div class="flex justify-between items-center">
+            <div class="px-4 py-4">
+                <div class="flex justify-between items-center mb-4">
                     <div class="flex">
                         <img class="mr-3 object-cover w-12 h-12 rounded-full" src="/resources/img/images/<?php echo $resultArticle['imageProfile'] ?>" alt="">
                         
@@ -46,19 +51,19 @@
                         </div>
                     <?php } ?>
                 </div>
-                
-                <div class="mt-6">
-                    <h1 class="font-semibold text-3xl mb-1"><?php echo $resultArticle['title'] ?></h1>
+                <div class="flex items-center justify-center">
+                    <img class="rounded-lg w-full" src="../../img/images/<?php echo $resultArticle['image'] ?>" alt="">
+                </div>
+                <div class="mt-4">
+                    <span class="text-green-500 text-lg"><?php echo $resultArticle['created_at'] ?></span>
+                    <h1 class="font-semibold text-3xl mb-1 mt-4"><?php echo $resultArticle['title'] ?></h1>
                     <p class="break-words">
                         <?php echo $resultArticle['content'] ?>
                     </p>
                 </div>
                 
             </div>
-            <div class="h-80 flex items-center justify-center bg-[#200E32]">
-                <img class="h-full object-contain" src="../../img/images/<?php echo $resultArticle['image'] ?>" alt="">
-            </div>
-            <div class="flex gap-1 flex-wrap px-6 py-4">
+            <div class="flex gap-1 flex-wrap px-4">
                 <?php
                     $idArticle = $resultArticle['id'];
                     $tagsOfArticle = new ArticleController($idArticle);
@@ -70,94 +75,122 @@
                     <?php } ?>
                 <?php } ?>
             </div>
-            <div class="px-6 py-2">
-                <div class="flex justify-between border-b-2 border-t-2 py-2">
-                    <div class="flex gap-5">
-                        <div class="flex items-center">
-                            <span class="mr-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="#cf4c4c" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"/></svg>
-                            </span>
-                            <!-- count total likes -->
-                            0
-                        </div>
-                        <div class="flex items-center">
-                            <!-- icon comments -->
-                            <span class="mr-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 -960 960 960" fill="#6d6972"><path d="M880-80 720-240H320q-33 0-56.5-23.5T240-320v-40h440q33 0 56.5-23.5T760-440v-280h40q33 0 56.5 23.5T880-640v560ZM160-473l47-47h393v-280H160v327ZM80-280v-520q0-33 23.5-56.5T160-880h440q33 0 56.5 23.5T680-800v280q0 33-23.5 56.5T600-440H240L80-280Zm80-240v-280 280Z"/></svg>
-                            </span>
-                            <?php
-                                $totalComments = new CommentController();
-                                echo $totalComments->totalComments();
-                            ?>
-                        </div>
-                    </div>
-                    <!-- icon views -->
-                    <div class="flex items-center">
-                        <a href="#" class="mr-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="hover:fill-[#200E32] transition duration-300 ease-in-out" height="20px" viewBox="0 -960 960 960" width="20px" fill="#6d6972"><path d="M480-320q75 0 127.5-52.5T660-500q0-75-52.5-127.5T480-680q-75 0-127.5 52.5T300-500q0 75 52.5 127.5T480-320Zm0-72q-45 0-76.5-31.5T372-500q0-45 31.5-76.5T480-608q45 0 76.5 31.5T588-500q0 45-31.5 76.5T480-392Zm0 192q-146 0-266-81.5T40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200Zm0-300Zm0 220q113 0 207.5-59.5T832-500q-50-101-144.5-160.5T480-720q-113 0-207.5 59.5T128-500q50 101 144.5 160.5T480-280Z"/></svg>
-                        </a>
-                        <p>0 views</p>
-                    </div>
-                </div>
-                <div class="flex justify-between py-2">
-                    <div class="flex gap-3">
+            <div class="px-4 py-4">
+                <div class="flex gap-2 justify-between border-t border-b border-gray-500 py-2">
+                    <?php if(isset($_SESSION['user'])) { ?>
                         <!-- icon like -->
                         <?php 
-                            $idUser = isset($_SESSION['user']) ? $_SESSION['user']['id'] : 0;
-                            $likes = new LikeController($resultArticle['id'], $idUser);
+                            $likes = new LikeController($resultArticle['id'], $idUser['id']);
                             $totalUserLike = $likes->totalUserLike();
                         ?>
-                        <?php if(isset($_SESSION['user'])) { ?>
+                        <div class="w-full">
                             <form action="./add_delete_like.php" method="post">
                                 <input type="hidden" value="<?php echo $resultArticle['id'] ?>" name="idArticle">
                                 <input type="hidden" value="<?php echo $_SERVER['PHP_SELF'] ?>" name="currentPath">
                                 <?php if($totalUserLike == 0) { ?>
-                                    <button class="hover:scale-110 transition duration-300 ease-in-out">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="28px" height="28px" fill="#cf4c4c" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M225.8 468.2l-2.5-2.3L48.1 303.2C17.4 274.7 0 234.7 0 192.8l0-3.3c0-70.4 50-130.8 119.2-144C158.6 37.9 198.9 47 231 69.6c9 6.4 17.4 13.8 25 22.3c4.2-4.8 8.7-9.2 13.5-13.3c3.7-3.2 7.5-6.2 11.5-9c0 0 0 0 0 0C313.1 47 353.4 37.9 392.8 45.4C462 58.6 512 119.1 512 189.5l0 3.3c0 41.9-17.4 81.9-48.1 110.4L288.7 465.9l-2.5 2.3c-8.2 7.6-19 11.9-30.2 11.9s-22-4.2-30.2-11.9zM239.1 145c-.4-.3-.7-.7-1-1.1l-17.8-20-.1-.1s0 0 0 0c-23.1-25.9-58-37.7-92-31.2C81.6 101.5 48 142.1 48 189.5l0 3.3c0 28.5 11.9 55.8 32.8 75.2L256 430.7 431.2 268c20.9-19.4 32.8-46.7 32.8-75.2l0-3.3c0-47.3-33.6-88-80.1-96.9c-34-6.5-69 5.4-92 31.2c0 0 0 0-.1 .1s0 0-.1 .1l-17.8 20c-.3 .4-.7 .7-1 1.1c-4.5 4.5-10.6 7-16.9 7s-12.4-2.5-16.9-7z"/></svg>
+                                    <button class="flex justify-center items-center gap-1 hover:text-black hover:bg-[#FFD37D] duration-500 w-full rounded-sm p-1">
+                                        <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path opacity="0.5" d="M12 5.50098L14 7.5004" stroke="#ff2c2c" stroke-width="1.5" stroke-linecap="round"/>
+                                            <path d="M8.96173 18.9109L9.42605 18.3219L8.96173 18.9109ZM12 5.50063L11.4596 6.02073C11.601 6.16763 11.7961 6.25063 12 6.25063C12.2039 6.25063 12.399 6.16763 12.5404 6.02073L12 5.50063ZM15.0383 18.9109L15.5026 19.4999L15.0383 18.9109ZM9.42605 18.3219C7.91039 17.1271 6.25307 15.9603 4.93829 14.4798C3.64922 13.0282 2.75 11.3345 2.75 9.1371H1.25C1.25 11.8026 2.3605 13.8361 3.81672 15.4758C5.24723 17.0866 7.07077 18.3752 8.49742 19.4999L9.42605 18.3219ZM2.75 9.1371C2.75 6.98623 3.96537 5.18252 5.62436 4.42419C7.23607 3.68748 9.40166 3.88258 11.4596 6.02073L12.5404 4.98053C10.0985 2.44352 7.26409 2.02539 5.00076 3.05996C2.78471 4.07292 1.25 6.42503 1.25 9.1371H2.75ZM8.49742 19.4999C9.00965 19.9037 9.55954 20.3343 10.1168 20.6599C10.6739 20.9854 11.3096 21.25 12 21.25V19.75C11.6904 19.75 11.3261 19.6293 10.8736 19.3648C10.4213 19.1005 9.95208 18.7366 9.42605 18.3219L8.49742 19.4999ZM15.5026 19.4999C16.9292 18.3752 18.7528 17.0866 20.1833 15.4758C21.6395 13.8361 22.75 11.8026 22.75 9.1371H21.25C21.25 11.3345 20.3508 13.0282 19.0617 14.4798C17.7469 15.9603 16.0896 17.1271 14.574 18.3219L15.5026 19.4999ZM22.75 9.1371C22.75 6.42503 21.2153 4.07292 18.9992 3.05996C16.7359 2.02539 13.9015 2.44352 11.4596 4.98053L12.5404 6.02073C14.5983 3.88258 16.7639 3.68748 18.3756 4.42419C20.0346 5.18252 21.25 6.98623 21.25 9.1371H22.75ZM14.574 18.3219C14.0479 18.7366 13.5787 19.1005 13.1264 19.3648C12.6739 19.6293 12.3096 19.75 12 19.75V21.25C12.6904 21.25 13.3261 20.9854 13.8832 20.6599C14.4405 20.3343 14.9903 19.9037 15.5026 19.4999L14.574 18.3219Z" fill="#ff2c2c"/>
+                                        </svg>
+                                        <?php
+                                            echo "<p>$totalUserLike Like</p>"
+                                        ?>
                                     </button>
                                 <?php } else { ?>
-                                    <button class="hover:scale-110 transition duration-300 ease-in-out">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="28px" height="28px" fill="#cf4c4c" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"/></svg>
+                                    <button class="flex justify-center items-center gap-1 hover:bg-[#FFD37D] hover:bg-opacity-75 duration-500 w-full rounded-sm p-1">
+                                        <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M8.10627 18.2468C5.29819 16.0833 2 13.5422 2 9.1371C2 4.27416 7.50016 0.825464 12 5.50063L14 7.49928C14.2929 7.79212 14.7678 7.79203 15.0607 7.49908C15.3535 7.20614 15.3534 6.73127 15.0605 6.43843L13.1285 4.50712C17.3685 1.40309 22 4.67465 22 9.1371C22 13.5422 18.7018 16.0833 15.8937 18.2468C15.6019 18.4717 15.3153 18.6925 15.0383 18.9109C14 19.7294 13 20.5 12 20.5C11 20.5 10 19.7294 8.96173 18.9109C8.68471 18.6925 8.39814 18.4717 8.10627 18.2468Z" fill="#ff2c2c"/>
+                                        </svg>
+                                        <?php
+                                            echo "$totalUserLike Like"
+                                        ?>
                                     </button>
                                 <?php } ?>
                             </form>
-                            <!-- icon comments for users -->
-                            <a href="./detailsArticle.php?idArticle=<?php echo $article['id'] ?>" class="hover:scale-110 transition duration-300 ease-in-out cursor-pointer">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 -960 960 960" fill="#6d6972"><path d="M880-80 720-240H320q-33 0-56.5-23.5T240-320v-40h440q33 0 56.5-23.5T760-440v-280h40q33 0 56.5 23.5T880-640v560ZM160-473l47-47h393v-280H160v327ZM80-280v-520q0-33 23.5-56.5T160-880h440q33 0 56.5 23.5T680-800v280q0 33-23.5 56.5T600-440H240L80-280Zm80-240v-280 280Z"/></svg>
-                            </a>
-                        <?php } else { ?>
-                            <a href="../auth/login.php" class="hover:scale-110 transition duration-300 ease-in-out cursor-pointer">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="28px" height="28px" fill="#cf4c4c" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M225.8 468.2l-2.5-2.3L48.1 303.2C17.4 274.7 0 234.7 0 192.8l0-3.3c0-70.4 50-130.8 119.2-144C158.6 37.9 198.9 47 231 69.6c9 6.4 17.4 13.8 25 22.3c4.2-4.8 8.7-9.2 13.5-13.3c3.7-3.2 7.5-6.2 11.5-9c0 0 0 0 0 0C313.1 47 353.4 37.9 392.8 45.4C462 58.6 512 119.1 512 189.5l0 3.3c0 41.9-17.4 81.9-48.1 110.4L288.7 465.9l-2.5 2.3c-8.2 7.6-19 11.9-30.2 11.9s-22-4.2-30.2-11.9zM239.1 145c-.4-.3-.7-.7-1-1.1l-17.8-20-.1-.1s0 0 0 0c-23.1-25.9-58-37.7-92-31.2C81.6 101.5 48 142.1 48 189.5l0 3.3c0 28.5 11.9 55.8 32.8 75.2L256 430.7 431.2 268c20.9-19.4 32.8-46.7 32.8-75.2l0-3.3c0-47.3-33.6-88-80.1-96.9c-34-6.5-69 5.4-92 31.2c0 0 0 0-.1 .1s0 0-.1 .1l-17.8 20c-.3 .4-.7 .7-1 1.1c-4.5 4.5-10.6 7-16.9 7s-12.4-2.5-16.9-7z"/></svg>
-                            </a>
-                                <!-- icon comments for visitor -->
-                            <a href="../auth/login.php" class="hover:scale-110 transition duration-300 ease-in-out cursor-pointer">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 -960 960 960" fill="#6d6972"><path d="M880-80 720-240H320q-33 0-56.5-23.5T240-320v-40h440q33 0 56.5-23.5T760-440v-280h40q33 0 56.5 23.5T880-640v560ZM160-473l47-47h393v-280H160v327ZM80-280v-520q0-33 23.5-56.5T160-880h440q33 0 56.5 23.5T680-800v280q0 33-23.5 56.5T600-440H240L80-280Zm80-240v-280 280Z"/></svg>
-                            </a>
-                        <?php } ?>
-                    </div>
-                    <div class="flex">
-                        <!-- icons saves -->
-                        <a href="#" class="hover:scale-110 transition duration-300 ease-in-out cursor-pointer">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#6d6972"><path d="M200-120v-640q0-33 23.5-56.5T280-840h400q33 0 56.5 23.5T760-760v640L480-240 200-120Zm80-122 200-86 200 86v-518H280v518Zm0-518h400-400Z"/></svg>
+                            
+                        </div>
+                        <!-- icon comments for users -->
+                        <a href="./detailsArticle.php?idArticle=<?php echo $resultArticle['id'] ?>" class="flex justify-center items-center rounded-sm gap-1 group hover:bg-[#FFD37D] hover:text-black duration-500 w-full">
+                            <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path class="group-hover:stroke-black duration-500" d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 14.663 3.04094 17.0829 4.73812 18.875L2.72681 21.1705C2.44361 21.4937 2.67314 22 3.10288 22H12Z" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M7 9H17" class="group-hover:stroke-black duration-500" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M7 13H11" class="group-hover:stroke-black duration-500" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <?php $comments = new CommentController("", "", $resultArticle['id']);
+                                $totalCommentsArticle = $comments->totalCommentsArticle();
+
+                                echo "$totalCommentsArticle Comment";
+                            ?>
                         </a>
-                    </div>
+
+                        <!-- icons saves -->
+                        <a href="#" class="flex justify-center items-center hover:bg-[#FFD37D] hover:text-black group duration-500 w-full rounded-sm">
+                            <svg width="22px" height="22px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path class="group-hover:stroke-black duration-500" d="M12.89 5.87988H5.10999C3.39999 5.87988 2 7.27987 2 8.98987V20.3499C2 21.7999 3.04 22.4199 4.31 21.7099L8.23999 19.5199C8.65999 19.2899 9.34 19.2899 9.75 19.5199L13.68 21.7099C14.95 22.4199 15.99 21.7999 15.99 20.3499V8.98987C16 7.27987 14.6 5.87988 12.89 5.87988Z" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path class="group-hover:stroke-black duration-500" d="M16 8.98987V20.3499C16 21.7999 14.96 22.4099 13.69 21.7099L9.76001 19.5199C9.34001 19.2899 8.65999 19.2899 8.23999 19.5199L4.31 21.7099C3.04 22.4099 2 21.7999 2 20.3499V8.98987C2 7.27987 3.39999 5.87988 5.10999 5.87988H12.89C14.6 5.87988 16 7.27987 16 8.98987Z" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path class="group-hover:stroke-black duration-500" d="M22 5.10999V16.47C22 17.92 20.96 18.53 19.69 17.83L16 15.77V8.98999C16 7.27999 14.6 5.88 12.89 5.88H8V5.10999C8 3.39999 9.39999 2 11.11 2H18.89C20.6 2 22 3.39999 22 5.10999Z" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>&nbsp;
+                            Saves
+                        </a>
+                    <?php } else { ?>
+                        <a href="../auth/login.php" class="flex justify-center items-center gap-1 hover:text-black hover:bg-[#FFD37D] duration-500 w-full rounded-sm p-1">
+                            <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path opacity="0.5" d="M12 5.50098L14 7.5004" stroke="#ff2c2c" stroke-width="1.5" stroke-linecap="round"/>
+                                <path d="M8.96173 18.9109L9.42605 18.3219L8.96173 18.9109ZM12 5.50063L11.4596 6.02073C11.601 6.16763 11.7961 6.25063 12 6.25063C12.2039 6.25063 12.399 6.16763 12.5404 6.02073L12 5.50063ZM15.0383 18.9109L15.5026 19.4999L15.0383 18.9109ZM9.42605 18.3219C7.91039 17.1271 6.25307 15.9603 4.93829 14.4798C3.64922 13.0282 2.75 11.3345 2.75 9.1371H1.25C1.25 11.8026 2.3605 13.8361 3.81672 15.4758C5.24723 17.0866 7.07077 18.3752 8.49742 19.4999L9.42605 18.3219ZM2.75 9.1371C2.75 6.98623 3.96537 5.18252 5.62436 4.42419C7.23607 3.68748 9.40166 3.88258 11.4596 6.02073L12.5404 4.98053C10.0985 2.44352 7.26409 2.02539 5.00076 3.05996C2.78471 4.07292 1.25 6.42503 1.25 9.1371H2.75ZM8.49742 19.4999C9.00965 19.9037 9.55954 20.3343 10.1168 20.6599C10.6739 20.9854 11.3096 21.25 12 21.25V19.75C11.6904 19.75 11.3261 19.6293 10.8736 19.3648C10.4213 19.1005 9.95208 18.7366 9.42605 18.3219L8.49742 19.4999ZM15.5026 19.4999C16.9292 18.3752 18.7528 17.0866 20.1833 15.4758C21.6395 13.8361 22.75 11.8026 22.75 9.1371H21.25C21.25 11.3345 20.3508 13.0282 19.0617 14.4798C17.7469 15.9603 16.0896 17.1271 14.574 18.3219L15.5026 19.4999ZM22.75 9.1371C22.75 6.42503 21.2153 4.07292 18.9992 3.05996C16.7359 2.02539 13.9015 2.44352 11.4596 4.98053L12.5404 6.02073C14.5983 3.88258 16.7639 3.68748 18.3756 4.42419C20.0346 5.18252 21.25 6.98623 21.25 9.1371H22.75ZM14.574 18.3219C14.0479 18.7366 13.5787 19.1005 13.1264 19.3648C12.6739 19.6293 12.3096 19.75 12 19.75V21.25C12.6904 21.25 13.3261 20.9854 13.8832 20.6599C14.4405 20.3343 14.9903 19.9037 15.5026 19.4999L14.574 18.3219Z" fill="#ff2c2c"/>
+                            </svg>
+                        </a>
+                            <!-- icon comments for visitor -->
+                        <a href="../auth/login.php" class="flex justify-center items-center gap-1 hover:text-black group hover:bg-[#FFD37D] duration-500 w-full rounded-sm p-1">
+                            <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path class="group-hover:stroke-black duration-500" d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 14.663 3.04094 17.0829 4.73812 18.875L2.72681 21.1705C2.44361 21.4937 2.67314 22 3.10288 22H12Z" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path class="group-hover:stroke-black duration-500" d="M7 9H17" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path class="group-hover:stroke-black duration-500" d="M7 13H11" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                        <!-- icons saves for visitor -->
+                        <a href="#" class="flex justify-center items-center gap-1 hover:text-black hover:bg-[#FFD37D] duration-500 w-full group rounded-sm p-1">
+                            <svg width="22px" height="22px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path class="group-hover:stroke-black duration-500" d="M12.89 5.87988H5.10999C3.39999 5.87988 2 7.27987 2 8.98987V20.3499C2 21.7999 3.04 22.4199 4.31 21.7099L8.23999 19.5199C8.65999 19.2899 9.34 19.2899 9.75 19.5199L13.68 21.7099C14.95 22.4199 15.99 21.7999 15.99 20.3499V8.98987C16 7.27987 14.6 5.87988 12.89 5.87988Z" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path class="group-hover:stroke-black duration-500" d="M16 8.98987V20.3499C16 21.7999 14.96 22.4099 13.69 21.7099L9.76001 19.5199C9.34001 19.2899 8.65999 19.2899 8.23999 19.5199L4.31 21.7099C3.04 22.4099 2 21.7999 2 20.3499V8.98987C2 7.27987 3.39999 5.87988 5.10999 5.87988H12.89C14.6 5.87988 16 7.27987 16 8.98987Z" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path class="group-hover:stroke-black duration-500" d="M22 5.10999V16.47C22 17.92 20.96 18.53 19.69 17.83L16 15.77V8.98999C16 7.27999 14.6 5.88 12.89 5.88H8V5.10999C8 3.39999 9.39999 2 11.11 2H18.89C20.6 2 22 3.39999 22 5.10999Z" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    <?php } ?>
                 </div>
-                <div class="rounded-md bg-gray-200 h-[500px] p-3 mb-16 md:mb-0 flex flex-col justify-between">
+                <div class="rounded-md h-[500px] pt-3 mb-16 md:mb-0 flex flex-col justify-between">
                     <div class="overflow-y-scroll hideScrollbar mb-2">
                         <?php if($getComments) { ?>
                             <?php foreach($getComments as $comment) { ?>
                                 <div class="flex flex-col mb-5">
-                                    <div class="flex items-start">
+                                    <div class="flex items-start gap-4">
                                         <!-- image owner comment -->
-                                        <img class="rounded-full object-cover w-10 h-10 mr-2" src="/resources/img/images/<?php echo $comment['imageProfile'] ?>" alt="cover image">
+                                        <img class="rounded-full object-cover w-16 h-16 mr-2" src="/resources/img/images/<?php echo $comment['imageProfile'] ?>" alt="cover image">
                                         <div class="max-w-[90%]">
-                                            <div class="text-[14px] flex justify-between items-center gap-10">
-                                                <p><?php echo (isset($_SESSION['user']) && $comment['idUser'] == $_SESSION['user']['id']) ? 'You' : $comment['username'] ?></p>
-                                                
+                                            <div class="flex justify-between items-center gap-10">
+                                                <div class="mb-3">
+                                                    <div class="flex gap-2 items-center">
+                                                        <p class="text-lg"><?php echo $comment['username'] ?></p>
+                                                        <?php if(isset($_SESSION['user']) && $comment['idUser'] == $_SESSION['user']['id']) { ?>
+                                                            <span class="text-[4px]"><i class="fa-solid fa-circle"></i></span>
+                                                            <span class="bg-[#FFD37D] px-2 text-black rounded-md">You</span>
+                                                        <?php } ?>
+                                                        <?php if($comment['role'] == 1) { ?>
+                                                            <span class="text-[4px]"><i class="fa-solid fa-circle"></i></span>
+                                                            <span class="bg-[#FFD37D] px-2 text-black rounded-md">Admin</span>
+                                                        <?php } ?>
+                                                        <?php if($resultArticle['idUser'] == $comment['idUser']) { ?>
+                                                            <span class="text-[4px]"><i class="fa-solid fa-circle"></i></span>
+                                                            <span class="bg-[#FFD37D] px-2 text-black rounded-md">Author</span>
+                                                        <?php } ?>
+                                                          
+                                                    </div>
+                                                    <p><?php echo $comment['created_at'] ?></p>
+                                                </div>
                                                 <?php if(isset($_SESSION['user'])) { ?>
                                                     <div class="relative">
                                                         <span class="showActions text-lg cursor-pointer" data-id="<?php echo $comment['id'] ?>">
-                                                            <i class="fa-solid fa-ellipsis"></i>
+                                                            <i class="fa-solid fa-ellipsis-vertical"></i>
                                                         </span>
 
                                                         <?php 
@@ -176,20 +209,19 @@
                                                     </div>
                                                 <?php } ?>
                                             </div>
-                                            <div class=" p-2 rounded-[0_8px_8px_8px] <?php echo (isset($_SESSION['user']) && $comment['idUser'] == $_SESSION['user']['id']) ? 'bg-[#553674] text-white' : 'bg-white'?> <?php if($comment['role'] == 1) echo ' bg-yellow-400 border-2 border-yellow-700' ?>">
+                                            <div class="rounded-[0_8px_8px_8px]">
                                                 <p class="break-all"><?php echo $comment['content'] ?></p>
                                             </div>
-                                        </div>
-                                        
-                                    </div>
-                                    <div class="ml-14 flex text-[12px] gap-3 mt-1 text-gray-600">
-                                        <p>Now</p>
-                                        <form class="flex items-center gap-1" action="./add_delete_like.php" method="post">
-                                            <button class="hover:scale-110 transition duration-300 ease-in-out">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" fill="#cf4c4c" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"/></svg>
-                                            </button>
-                                            <p>like</p>
-                                        </form>
+                                            <div class="flex text-[12px] gap-3 mt-1 text-gray-600">
+                                                <p>Now</p>
+                                                <form class="flex items-center gap-1" action="./add_delete_like.php" method="post">
+                                                    <button class="hover:scale-110 transition duration-300 ease-in-out">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" fill="#cf4c4c" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"/></svg>
+                                                    </button>
+                                                    <p>like</p>
+                                                </form>
+                                            </div>
+                                        </div>  
                                     </div>
                                 </div>
                             <?php } ?>
@@ -197,12 +229,12 @@
                     </div>
                     <?php if(isset($_SESSION['user'])) { ?>
                         <form action="./insertComment.php" method="post" class="w-full">
-                            <div class="flex flex-col items-end rounded-md overflow-hidden bg-gray-300">
+                            <div class="flex flex-col items-end rounded-md overflow-hidden bg-[#33363a]">
                                 <input type="hidden" name="idUser" value="<?php echo $_SESSION['user']['id'] ?>">
                                 <input type="hidden" name="idArticle" value="<?php echo $idArticle ?>">
                                 <textarea name="content" class="outline-none w-full p-2 bg-inherit hideScrollbar" style="resize: none"></textarea>
                                 <button class="p-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" class="hover:fill-red-600" width="32px" fill="#434343">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" class="hover:fill-[#FFD37D]" width="32px" fill="#FFFFFF">
                                         <path d="M120-160v-640l760 320-760 320Zm80-120 474-200-474-200v140l240 60-240 60v140Zm0 0v-400 400Z"/>
                                     </svg>
                                 </button>
