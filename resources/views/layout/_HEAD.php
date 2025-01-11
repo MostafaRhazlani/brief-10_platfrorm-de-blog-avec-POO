@@ -20,21 +20,16 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="/resources/css/style.css">
 </head>
-<body class="">
+<body class="bg-[#131415]">
 
-<div class="relative h-full">
-    <div class="p-3 md:pl-20 fixed top-0 z-20 bg-white w-full shadow-[0px_0px_5px_1px_#c2c2c2]">
+<div class="relative lg:static md:flex md:justify-between md:px-4 md:gap-5">
+    <div class="p-3 md:pl-20 min-h-[65px] fixed top-0 left-0 z-20 bg-[#25272A] w-full">
         <div class="flex items-center justify-between">
             <?php if(isset($_SESSION['user'])) { ?>
                 <div class="flex items-center gap-4">
-                    <div class="relative">
-                        <div class="cursor-pointer hover:opacity-60 showPopupUser">
-                            <div class="flex justify-center items-center absolute w-5 h-5 bottom-0 bg-white rounded-full">
-                                <span class="text-sm font-bold text-gray-500">
-                                    <i class="fa-solid fa-circle-chevron-down"></i>
-                                </span>
-                            </div>
-                            <img class="w-16 h-16 object-cover rounded-full" src="/resources/img/images/<?php echo $getAdmin['imageProfile'] ?>" alt="">
+                    <div class="">
+                        <div class="cursor-pointer hover:opacity-60 showPopupUser w-14 h-14 rounded-xl bg-white">
+                            <img class="object-cover" src="/resources/img/images/<?php echo $getAdmin['imageProfile'] ?>" alt="">
                         </div>
         
                         <div class="popupUser hidden absolute mt-2 w-32 bg-white shadow-[0px_0px_5px_1px_#c2c2c2] p-2 rounded-md">
