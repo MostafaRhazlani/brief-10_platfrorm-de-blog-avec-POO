@@ -29,6 +29,14 @@
             return $insertComment->create();
         }
 
+        public function totalCommentsArticle() {
+            $db = new DB();
+            $conn = $db->connect();
+
+            $result = $conn->query("SELECT count(id) FROM comments WHERE idArticle = $this->idArticle");
+            return $result->fetchColumn();
+        }
+
         public function getComment() {
             $getOne = new CRUDContoller("comments", ['id', 'content'], "id", $this->id);
             
