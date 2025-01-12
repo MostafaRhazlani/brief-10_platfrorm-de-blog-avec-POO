@@ -3,12 +3,8 @@
     require_once __DIR__ . '/../../../controllers/ArticleController.php';
     require_once __DIR__ . '/../../../controllers/TagController.php';
     require_once __DIR__ . '/../../../controllers/LikeArticle.php';
-    require_once __DIR__ . '/../../../controllers/UserController.php';
     require_once __DIR__ . '/../../../controllers/CommentController.php';
 
-    $id = isset($_SESSION['user']) ? $_SESSION['user']['id'] : 0;
-    $user = new UserController($id);
-    $idUser = $user->getUser();
 
     $articles = new ArticleController();
     $getArticles = $articles->index();
